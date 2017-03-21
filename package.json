@@ -1,0 +1,17 @@
+{
+  "name": "montage-data-server",
+  "version": "0.0.1",
+  "dependencies": {
+    "http2": "^3.3.6",
+    "montage": "hthetiot/montage#upgrade_test",
+    "montage-data": "montagestudio/montage-data#npm",
+    "mr": "hthetiot/mr#npmv3",
+    "xhr2": "^0.1.4"
+  },
+  "devDependencies": {
+    "jasmine-console-reporter": "^1.2.7",
+    "jasmine-core": "^2.5.2",
+    "montage-testing": "hthetiot/montage-testing#upgrade"
+  },
+  "private": true
+}

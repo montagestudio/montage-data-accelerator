@@ -1,0 +1,2488 @@
+Searching 398 files for "getInfoForObject" (case sensitive)
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/core/core-require-spec.js:
+   38          it("should describe a class object",
+   39          function () {
+   40:             var info = Montage.getInfoForObject(objects.Proto);
+   41  
+   42              expect(info.objectName).toBe("Proto");
+   ..
+   46          it("should describe a subclass object",
+   47          function () {
+   48:             var info = Montage.getInfoForObject(objects.SubProto);
+   49  
+   50              expect(info.objectName).toBe("SubProto");
+   ..
+   55          function () {
+   56              var instance = new objects.Simple();
+   57:             var info = Montage.getInfoForObject(instance);
+   58  
+   59              expect(info.objectName).toBe("Simple");
+   ..
+   65          function () {
+   66              var instance = new objects.Funktion();
+   67:             var info = Montage.getInfoForObject(instance);
+   68  
+   69              expect(info.objectName).toBe("Funktion");
+   ..
+   72          });
+   73  
+   74:         it("should describe a class object that accessed getInfoForObject before being exported",
+   75          function () {
+   76:             var info = Montage.getInfoForObject(objects.FunkyProto);
+   77  
+   78              expect(info.objectName).toBe("FunkyProto");
+   ..
+   82  
+   83          it("should not be added to the Object constructor", function () {
+   84:             Montage.getInfoForObject(Object.prototype);
+   85  
+   86              var instance = new objects.Simple();
+   87:             var info = Montage.getInfoForObject(instance);
+   88  
+   89              expect(info.objectName).toBe("Simple");
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/core/testobjects.js:
+   44      firstUuid: {value: null},
+   45  });
+   46: Montage.getInfoForObject(FunkyProto);
+   47  
+   48  var SubProto = exports.SubProto = Proto.specialize( {
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/meta/blueprint-spec.js:
+  215                  var serializedBinder = new Serializer().initWithRequire(require).serializeObject(companyBinder);
+  216                  var deserializer = new Deserializer().init(serializedBinder, require).deserializeObject().then(function (deserializedBinder) {
+  217:                     var metadata = Montage.getInfoForObject(deserializedBinder);
+  218                      expect(serializedBinder).not.toBeNull();
+  219                      expect(metadata.objectName).toBe("Model");
+  ...
+  231  
+  232              it("Should be a prototype", function () {
+  233:                 var info = Montage.getInfoForObject(Person);
+  234                  expect(info.isInstance).toBeFalsy();
+  235              });
+  236  
+  237              it("Should have the right moduleId and Name", function () {
+  238:                 var info = Montage.getInfoForObject(Person);
+  239                  expect(info.moduleId).toBe("spec/meta/blueprint/person");
+  240                  expect(info.objectName).toBe("Person");
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/reel/template/flatten.reel/flatten.js:
+   61          templateModuleId = this.templateModuleId;
+   62          if (!templateModuleId) {
+   63:             info = Montage.getInfoForObject(this);
+   64              moduleId = info.moduleId;
+   65              filename =  moduleId.split("/").pop();
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/serialization/montage-deserializer-spec.js:
+  483              deserializer.init(serializationString, require);
+  484              deserializer.deserializeObject().then(function (root) {
+  485:                 var info = Montage.getInfoForObject(root);
+  486                  expect(Object.getPrototypeOf(root)).toBe(objects.TestobjectsV2.prototype);
+  487                  expect(root.instance).toBeUndefined();
+  ...
+  508              deserializer.init(serializationString, require);
+  509              deserializer.deserializeObject().then(function (root) {
+  510:                 var info = Montage.getInfoForObject(root);
+  511  
+  512                  expect(Object.getPrototypeOf(root)).toBe(objects.TestobjectsV2.prototype);
+  ...
+  538              deserializer.init(serializationString, require);
+  539              deserializer.deserializeObject().then(function (root) {
+  540:                 var info = Montage.getInfoForObject(root);
+  541  
+  542                  expect(info.moduleId).toBe("spec/serialization/module-name.reel");
+  ...
+  565              deserializer.init(serializationString, require);
+  566              deserializer.deserializeObject().then(function (root) {
+  567:                 var info = Montage.getInfoForObject(root);
+  568  
+  569                  expect(root).toBe(objects.TestobjectsV2);
+  ...
+  594              deserializer.init(serializationString, require);
+  595              deserializer.deserializeObject().then(function (root) {
+  596:                 var info = Montage.getInfoForObject(root);
+  597  
+  598                  expect(root).toBe(objects.TestobjectsV2);
+  ...
+  636              deserializer.init(serializationString, require);
+  637              deserializer.deserializeObject().then(function (object) {
+  638:                     var info = Montage.getInfoForObject(object);
+  639                      expect(info.moduleId).toBe("core/meta/object-descriptor");
+  640                      expect(info.isInstance).toBe(true);
+  ...
+  667             setTimeout(function () {
+  668                 var root = objects.root,
+  669:                    info = Montage.getInfoForObject(root);
+  670          
+  671                 expect(Montage.isPrototypeOf(root));
+  ...
+  698             setTimeout(function () {
+  699                 var root = objects.root,
+  700:                    info = Montage.getInfoForObject(root);
+  701          
+  702                 expect(root).toBe(Montage);
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/ui/component-spec.js:
+ 1337                      templatePropertyLabel;
+ 1338  
+ 1339:                 Montage.getInfoForObject(component).label = "component";
+ 1340                  component._templateDocumentPart = new DocumentPart();
+ 1341                  component._templateDocumentPart.objects = {
+ ....
+ 1352                      templatePropertyLabel;
+ 1353  
+ 1354:                 Montage.getInfoForObject(component).label = "component";
+ 1355                  component._templateDocumentPart = new DocumentPart();
+ 1356                  component._templateDocumentPart.objects = {
+ ....
+ 1369                      bar = new Component();
+ 1370  
+ 1371:                 Montage.getInfoForObject(component).label = "component";
+ 1372                  component._templateDocumentPart = new DocumentPart();
+ 1373                  component._templateDocumentPart.objects = {
+ ....
+ 1376                  };
+ 1377  
+ 1378:                 Montage.getInfoForObject(foo).label = "foo";
+ 1379                  foo._templateDocumentPart = new DocumentPart();
+ 1380                  foo._templateDocumentPart.objects = {
+ ....
+ 1383                  };
+ 1384  
+ 1385:                 Montage.getInfoForObject(bar).label = "bar";
+ 1386                  bar._templateDocumentPart = new DocumentPart();
+ 1387                  bar._templateDocumentPart.objects = {
+
+26 matches across 6 files
+
+
+Searching 398 files for "getInfoForObject =" (case sensitive)
+
+0 matches
+
+Searching 398 files for "getInfoForObject:" (case sensitive)
+
+0 matches
+
+Searching 11250 files for "getInfoForObject:" (case sensitive)
+
+0 matches
+
+Searching 11250 files for "getInfoForObject =" (case sensitive)
+
+0 matches
+
+Searching 11250 files for "getInfoForObject" (case sensitive)
+
+/Users/hthetiot/projects/Kaazing/src/montage/composer/key-composer.js:
+  144  
+  145              if (this.identifier === null) {
+  146:                 this.identifier = Montage.getInfoForObject(this).label;
+  147              }
+  148  
+
+/Users/hthetiot/projects/Kaazing/src/montage/core/core.js:
+  870  /**
+  871   * Get the metadata Montage has on the given object.
+  872:  * @function Montage.getInfoForObject
+  873   * @param {Object} object
+  874   * @returns {Object} If the object was exported by a module, `property` is the
+  ...
+  878   * constructors and prototypes from instances.
+  879   */
+  880: Montage.defineProperty(Montage, "getInfoForObject", {
+  881:     value: function Montage_getInfoForObject(object) {
+  882          var metadata;
+  883          var instanceMetadataDescriptor;
+  ...
+  896  
+  897              // don't modify the Object prototype, because this will cause
+  898:             // future calls to Montage.getInfoForObject on objects without
+  899              // their own _montage_metadata property to return this one
+  900              if (object === Object.prototype) {
+  ...
+ 1619      enumerable: false,
+ 1620      get:function () {
+ 1621:         var info = Montage.getInfoForObject(this);
+ 1622          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1623          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1624:             info = Montage.getInfoForObject(self);
+ 1625              var moduleId = info.moduleId,
+ 1626                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1645      enumerable: false,
+ 1646      get:function () {
+ 1647:         var info = Montage.getInfoForObject(this);
+ 1648          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1649          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1650:             info = Montage.getInfoForObject(self);
+ 1651              var moduleId = info.moduleId,
+ 1652                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1668      enumerable: false,
+ 1669      get:function () {
+ 1670:         var info = Montage.getInfoForObject(this);
+ 1671          var self = info && !info.isInstance ? this : this.constructor;
+ 1672          if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptor") || !self._objectDescriptor) {
+ ....
+ 1681                  enumerable: false,
+ 1682                  value: exports._objectDescriptorDescriptor.ObjectDescriptorModulePromise.then(function (ObjectDescriptor) {
+ 1683:                     var info = Montage.getInfoForObject(self);
+ 1684  
+ 1685                      return ObjectDescriptor.getObjectDescriptorWithModuleId(objectDescriptorModuleId, info.require)
+ ....
+ 1702      },
+ 1703      set:function (value) {
+ 1704:         var info = Montage.getInfoForObject(this);
+ 1705          var _objectDescriptorValue;
+ 1706          var self = (info && !info.isInstance) ? this : this.constructor;
+
+/Users/hthetiot/projects/Kaazing/src/montage/core/deprecate.js:
+   73      Error.stackTraceLimit = 2;
+   74      if (typeof console !== "undefined" && typeof console.warn === "function") {
+   75:         scopeName = Montage.getInfoForObject(scope).objectName;
+   76  
+   77          if(alternative) {
+
+/Users/hthetiot/projects/Kaazing/src/montage/core/meta/module-object-descriptor.js:
+  136      createDefaultObjectDescriptorForObject: {
+  137          value: function (object) {
+  138:             var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object;
+  139:             var info = Montage.getInfoForObject(target);
+  140              if (!info.objectName || !info.moduleId) {
+  141                  return Promise.reject("Cannot create module-object-descriptor for an object that has no been loaded from a module");
+
+/Users/hthetiot/projects/Kaazing/src/montage/core/meta/object-descriptor.js:
+ 1196          value:function (object) {
+ 1197              if (object) {
+ 1198:                 var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object.prototype;
+ 1199:                 var info = Montage.getInfoForObject(target);
+ 1200  
+ 1201                  // Create `new this()` so that subclassing works
+
+/Users/hthetiot/projects/Kaazing/src/montage/core/meta/object-property.js:
+   45              var info;
+   46              if (!prototype.hasOwnProperty("objectDescriptor")) {
+   47:                 info = Montage.getInfoForObject(prototype);
+   48                  if (info != null && info.isInstance === false) {
+   49                      if (objectDescriptor === undefined) {
+
+/Users/hthetiot/projects/Kaazing/src/montage/core/serialization/serializer/montage-labeler.js:
+   70              if (identifier && this._labelRegexp.test(identifier)) {
+   71                  objectName = object.identifier;
+   72:             } else if (object && typeof object === "object" && "getInfoForObject" in object || "getInfoForObject" in object.constructor ) {
+   73:                 objectName = Montage.getInfoForObject(object).objectName;
+   74                  objectName = objectName.toLowerCase();
+   75              } else {
+
+/Users/hthetiot/projects/Kaazing/src/montage/core/serialization/serializer/montage-visitor.js:
+   36              } else if (object instanceof Alias) {
+   37                  return "Alias";
+   38:             } else if ("getInfoForObject" in object || "getInfoForObject" in object.constructor) {
+   39                  return "MontageObject";
+   40              } else if (object.thisIsAReferenceCreatedByMontageSerializer) {
+   ..
+  234      setObjectType: {
+  235          value: function (object, builderObject) {
+  236:             var isInstance = Montage.getInfoForObject(object).isInstance,
+  237                  locationId = this.getObjectLocationId(object),
+  238                  locationIdBuilderObject = this.builder.createString(locationId);
+  ...
+  248      getObjectModuleId: {
+  249          value: function (object) {
+  250:             var objectInfo = Montage.getInfoForObject(object);
+  251  
+  252              return this._require.identify(objectInfo.moduleId,
+  ...
+  259              var moduleId = this.getObjectModuleId(object),
+  260                  defaultObjectName,
+  261:                 objectInfo = Montage.getInfoForObject(object),
+  262                  objectName = objectInfo.objectName;
+  263  
+
+/Users/hthetiot/projects/Kaazing/src/montage/core/uuid.js:
+   88  
+   89      var uuid = generate(),
+   90:         info = Montage.getInfoForObject(this);
+   91      try {
+   92          if (info !== null && info.isInstance === false) {
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/composer/key-composer.js:
+  144  
+  145              if (this.identifier === null) {
+  146:                 this.identifier = Montage.getInfoForObject(this).label;
+  147              }
+  148  
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/core/core.js:
+  870  /**
+  871   * Get the metadata Montage has on the given object.
+  872:  * @function Montage.getInfoForObject
+  873   * @param {Object} object
+  874   * @returns {Object} If the object was exported by a module, `property` is the
+  ...
+  878   * constructors and prototypes from instances.
+  879   */
+  880: Montage.defineProperty(Montage, "getInfoForObject", {
+  881:     value: function Montage_getInfoForObject(object) {
+  882          var metadata;
+  883          var instanceMetadataDescriptor;
+  ...
+  896  
+  897              // don't modify the Object prototype, because this will cause
+  898:             // future calls to Montage.getInfoForObject on objects without
+  899              // their own _montage_metadata property to return this one
+  900              if (object === Object.prototype) {
+  ...
+ 1619      enumerable: false,
+ 1620      get:function () {
+ 1621:         var info = Montage.getInfoForObject(this);
+ 1622          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1623          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1624:             info = Montage.getInfoForObject(self);
+ 1625              var moduleId = info.moduleId,
+ 1626                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1645      enumerable: false,
+ 1646      get:function () {
+ 1647:         var info = Montage.getInfoForObject(this);
+ 1648          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1649          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1650:             info = Montage.getInfoForObject(self);
+ 1651              var moduleId = info.moduleId,
+ 1652                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1668      enumerable: false,
+ 1669      get:function () {
+ 1670:         var info = Montage.getInfoForObject(this);
+ 1671          var self = info && !info.isInstance ? this : this.constructor;
+ 1672          if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptor") || !self._objectDescriptor) {
+ ....
+ 1681                  enumerable: false,
+ 1682                  value: exports._objectDescriptorDescriptor.ObjectDescriptorModulePromise.then(function (ObjectDescriptor) {
+ 1683:                     var info = Montage.getInfoForObject(self);
+ 1684  
+ 1685                      return ObjectDescriptor.getObjectDescriptorWithModuleId(objectDescriptorModuleId, info.require)
+ ....
+ 1702      },
+ 1703      set:function (value) {
+ 1704:         var info = Montage.getInfoForObject(this);
+ 1705          var _objectDescriptorValue;
+ 1706          var self = (info && !info.isInstance) ? this : this.constructor;
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/core/deprecate.js:
+   73      Error.stackTraceLimit = 2;
+   74      if (typeof console !== "undefined" && typeof console.warn === "function") {
+   75:         scopeName = Montage.getInfoForObject(scope).objectName;
+   76  
+   77          if(alternative) {
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/core/meta/module-object-descriptor.js:
+  136      createDefaultObjectDescriptorForObject: {
+  137          value: function (object) {
+  138:             var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object;
+  139:             var info = Montage.getInfoForObject(target);
+  140              if (!info.objectName || !info.moduleId) {
+  141                  return Promise.reject("Cannot create module-object-descriptor for an object that has no been loaded from a module");
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/core/meta/object-descriptor.js:
+ 1196          value:function (object) {
+ 1197              if (object) {
+ 1198:                 var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object.prototype;
+ 1199:                 var info = Montage.getInfoForObject(target);
+ 1200  
+ 1201                  // Create `new this()` so that subclassing works
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/core/meta/object-property.js:
+   45              var info;
+   46              if (!prototype.hasOwnProperty("objectDescriptor")) {
+   47:                 info = Montage.getInfoForObject(prototype);
+   48                  if (info != null && info.isInstance === false) {
+   49                      if (objectDescriptor === undefined) {
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/core/serialization/serializer/montage-labeler.js:
+   70              if (identifier && this._labelRegexp.test(identifier)) {
+   71                  objectName = object.identifier;
+   72:             } else if (object && typeof object === "object" && "getInfoForObject" in object || "getInfoForObject" in object.constructor ) {
+   73:                 objectName = Montage.getInfoForObject(object).objectName;
+   74                  objectName = objectName.toLowerCase();
+   75              } else {
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/core/serialization/serializer/montage-visitor.js:
+   36              } else if (object instanceof Alias) {
+   37                  return "Alias";
+   38:             } else if ("getInfoForObject" in object || "getInfoForObject" in object.constructor) {
+   39                  return "MontageObject";
+   40              } else if (object.thisIsAReferenceCreatedByMontageSerializer) {
+   ..
+  234      setObjectType: {
+  235          value: function (object, builderObject) {
+  236:             var isInstance = Montage.getInfoForObject(object).isInstance,
+  237                  locationId = this.getObjectLocationId(object),
+  238                  locationIdBuilderObject = this.builder.createString(locationId);
+  ...
+  248      getObjectModuleId: {
+  249          value: function (object) {
+  250:             var objectInfo = Montage.getInfoForObject(object);
+  251  
+  252              return this._require.identify(objectInfo.moduleId,
+  ...
+  259              var moduleId = this.getObjectModuleId(object),
+  260                  defaultObjectName,
+  261:                 objectInfo = Montage.getInfoForObject(object),
+  262                  objectName = objectInfo.objectName;
+  263  
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/core/uuid.js:
+   88  
+   89      var uuid = generate(),
+   90:         info = Montage.getInfoForObject(this);
+   91      try {
+   92          if (info !== null && info.isInstance === false) {
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/ui/component.js:
+  585              if (window._montage_le_flag) {
+  586              //jshint +W106
+  587:                 value.setAttribute(ATTR_LE_COMPONENT, Montage.getInfoForObject(this).moduleId);
+  588              }
+  589  
+  ...
+  817  
+  818              // Check if the template property is referring to this object at all.
+  819:             if (Montage.getInfoForObject(this).label !== componentLabel) {
+  820                  return;
+  821              }
+  ...
+  976  
+  977                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  978:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label) {
+  979                          if (rest) {
+  980                              return childComponent.querySelectorComponent(rest);
+  ...
+  991              } else {
+  992                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  993:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label) {
+  994                          if (rest) {
+  995                              return childComponent.querySelectorComponent(rest);
+  ...
+ 1032                  rest = rightHandOperand ? "@"+rightHandOperand + rest : "";
+ 1033                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1034:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1035                          if (rest) {
+ 1036                              found = found.concat(childComponent.querySelectorAllComponent(rest));
+ ....
+ 1044              } else {
+ 1045                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1046:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1047                          if (rest) {
+ 1048                              found = found.concat(childComponent.querySelectorAllComponent(rest, owner));
+ ....
+ 1839              if (!this._loadTemplatePromise) {
+ 1840                  var self = this;
+ 1841:                 info = Montage.getInfoForObject(this);
+ 1842  
+ 1843                  this._loadTemplatePromise = Template.getTemplateWithModuleId(
+ ....
+ 1873                  info;
+ 1874  
+ 1875:             info = Montage.getInfoForObject(this);
+ 1876              moduleId = info.moduleId;
+ 1877              slashIndex = moduleId.lastIndexOf("/");
+ ....
+ 1890      _deserializedFromTemplate: {
+ 1891          value: function (owner, label, documentPart) {
+ 1892:             Montage.getInfoForObject(this).label = label;
+ 1893              this._ownerDocumentPart = documentPart;
+ 1894  
+ ....
+ 1927          enumerable: false,
+ 1928          get: function () {
+ 1929:             var info = Montage.getInfoForObject(this);
+ 1930              var self = (info && !info.isInstance) ? this : Object.getPrototypeOf(this);
+ 1931              if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId") || !self._objectDescriptorModuleId) {
+ 1932:                 info = Montage.getInfoForObject(self);
+ 1933                  var moduleId = info.moduleId,
+ 1934                      slashIndex = moduleId.lastIndexOf("/"),
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/ui/repetition.reel/repetition.js:
+ 1172              serialization = iterationTemplate.getSerialization();
+ 1173              serializationObject = serialization.getSerializationObject();
+ 1174:             label = Montage.getInfoForObject(this).label;
+ 1175  
+ 1176              this._iterationLabel = label + ":iteration";
+
+/Users/hthetiot/projects/Kaazing/src/montage/node_modules/montage-testing/node_modules/montage/ui/succession.info/sample/ui/main.reel/main.js:
+   26  
+   27              // enable logger to work
+   28:             Montage.getInfoForObject(this).objectName = 'Foo';
+   29  
+   30              component.identifier = 'Foo' + this.fooCount;
+   ..
+   65  
+   66              // enable logger to work
+   67:             Montage.getInfoForObject(this).objectName = 'Bar';
+   68  
+   69              //component.identifier = 'Bar' + this.barCount;
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/core/core-require-spec.js:
+   38          it("should describe a class object",
+   39          function () {
+   40:             var info = Montage.getInfoForObject(objects.Proto);
+   41  
+   42              expect(info.objectName).toBe("Proto");
+   ..
+   46          it("should describe a subclass object",
+   47          function () {
+   48:             var info = Montage.getInfoForObject(objects.SubProto);
+   49  
+   50              expect(info.objectName).toBe("SubProto");
+   ..
+   55          function () {
+   56              var instance = new objects.Simple();
+   57:             var info = Montage.getInfoForObject(instance);
+   58  
+   59              expect(info.objectName).toBe("Simple");
+   ..
+   65          function () {
+   66              var instance = new objects.Funktion();
+   67:             var info = Montage.getInfoForObject(instance);
+   68  
+   69              expect(info.objectName).toBe("Funktion");
+   ..
+   72          });
+   73  
+   74:         it("should describe a class object that accessed getInfoForObject before being exported",
+   75          function () {
+   76:             var info = Montage.getInfoForObject(objects.FunkyProto);
+   77  
+   78              expect(info.objectName).toBe("FunkyProto");
+   ..
+   82  
+   83          it("should not be added to the Object constructor", function () {
+   84:             Montage.getInfoForObject(Object.prototype);
+   85  
+   86              var instance = new objects.Simple();
+   87:             var info = Montage.getInfoForObject(instance);
+   88  
+   89              expect(info.objectName).toBe("Simple");
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/core/testobjects.js:
+   44      firstUuid: {value: null},
+   45  });
+   46: Montage.getInfoForObject(FunkyProto);
+   47  
+   48  var SubProto = exports.SubProto = Proto.specialize( {
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/meta/blueprint-spec.js:
+  215                  var serializedBinder = new Serializer().initWithRequire(require).serializeObject(companyBinder);
+  216                  var deserializer = new Deserializer().init(serializedBinder, require).deserializeObject().then(function (deserializedBinder) {
+  217:                     var metadata = Montage.getInfoForObject(deserializedBinder);
+  218                      expect(serializedBinder).not.toBeNull();
+  219                      expect(metadata.objectName).toBe("Model");
+  ...
+  231  
+  232              it("Should be a prototype", function () {
+  233:                 var info = Montage.getInfoForObject(Person);
+  234                  expect(info.isInstance).toBeFalsy();
+  235              });
+  236  
+  237              it("Should have the right moduleId and Name", function () {
+  238:                 var info = Montage.getInfoForObject(Person);
+  239                  expect(info.moduleId).toBe("spec/meta/blueprint/person");
+  240                  expect(info.objectName).toBe("Person");
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/reel/template/flatten.reel/flatten.js:
+   61          templateModuleId = this.templateModuleId;
+   62          if (!templateModuleId) {
+   63:             info = Montage.getInfoForObject(this);
+   64              moduleId = info.moduleId;
+   65              filename =  moduleId.split("/").pop();
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/serialization/montage-deserializer-spec.js:
+  483              deserializer.init(serializationString, require);
+  484              deserializer.deserializeObject().then(function (root) {
+  485:                 var info = Montage.getInfoForObject(root);
+  486                  expect(Object.getPrototypeOf(root)).toBe(objects.TestobjectsV2.prototype);
+  487                  expect(root.instance).toBeUndefined();
+  ...
+  508              deserializer.init(serializationString, require);
+  509              deserializer.deserializeObject().then(function (root) {
+  510:                 var info = Montage.getInfoForObject(root);
+  511  
+  512                  expect(Object.getPrototypeOf(root)).toBe(objects.TestobjectsV2.prototype);
+  ...
+  538              deserializer.init(serializationString, require);
+  539              deserializer.deserializeObject().then(function (root) {
+  540:                 var info = Montage.getInfoForObject(root);
+  541  
+  542                  expect(info.moduleId).toBe("spec/serialization/module-name.reel");
+  ...
+  565              deserializer.init(serializationString, require);
+  566              deserializer.deserializeObject().then(function (root) {
+  567:                 var info = Montage.getInfoForObject(root);
+  568  
+  569                  expect(root).toBe(objects.TestobjectsV2);
+  ...
+  594              deserializer.init(serializationString, require);
+  595              deserializer.deserializeObject().then(function (root) {
+  596:                 var info = Montage.getInfoForObject(root);
+  597  
+  598                  expect(root).toBe(objects.TestobjectsV2);
+  ...
+  636              deserializer.init(serializationString, require);
+  637              deserializer.deserializeObject().then(function (object) {
+  638:                     var info = Montage.getInfoForObject(object);
+  639                      expect(info.moduleId).toBe("core/meta/object-descriptor");
+  640                      expect(info.isInstance).toBe(true);
+  ...
+  667             setTimeout(function () {
+  668                 var root = objects.root,
+  669:                    info = Montage.getInfoForObject(root);
+  670          
+  671                 expect(Montage.isPrototypeOf(root));
+  ...
+  698             setTimeout(function () {
+  699                 var root = objects.root,
+  700:                    info = Montage.getInfoForObject(root);
+  701          
+  702                 expect(root).toBe(Montage);
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/ui/component-spec.js:
+ 1337                      templatePropertyLabel;
+ 1338  
+ 1339:                 Montage.getInfoForObject(component).label = "component";
+ 1340                  component._templateDocumentPart = new DocumentPart();
+ 1341                  component._templateDocumentPart.objects = {
+ ....
+ 1352                      templatePropertyLabel;
+ 1353  
+ 1354:                 Montage.getInfoForObject(component).label = "component";
+ 1355                  component._templateDocumentPart = new DocumentPart();
+ 1356                  component._templateDocumentPart.objects = {
+ ....
+ 1369                      bar = new Component();
+ 1370  
+ 1371:                 Montage.getInfoForObject(component).label = "component";
+ 1372                  component._templateDocumentPart = new DocumentPart();
+ 1373                  component._templateDocumentPart.objects = {
+ ....
+ 1376                  };
+ 1377  
+ 1378:                 Montage.getInfoForObject(foo).label = "foo";
+ 1379                  foo._templateDocumentPart = new DocumentPart();
+ 1380                  foo._templateDocumentPart.objects = {
+ ....
+ 1383                  };
+ 1384  
+ 1385:                 Montage.getInfoForObject(bar).label = "bar";
+ 1386                  bar._templateDocumentPart = new DocumentPart();
+ 1387                  bar._templateDocumentPart.objects = {
+
+/Users/hthetiot/projects/Kaazing/src/montage/ui/component.js:
+  585              if (global._montage_le_flag) {
+  586              //jshint +W106
+  587:                 value.setAttribute(ATTR_LE_COMPONENT, Montage.getInfoForObject(this).moduleId);
+  588              }
+  589  
+  ...
+  817  
+  818              // Check if the template property is referring to this object at all.
+  819:             if (Montage.getInfoForObject(this).label !== componentLabel) {
+  820                  return;
+  821              }
+  ...
+  976  
+  977                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  978:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label) {
+  979                          if (rest) {
+  980                              return childComponent.querySelectorComponent(rest);
+  ...
+  991              } else {
+  992                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  993:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label) {
+  994                          if (rest) {
+  995                              return childComponent.querySelectorComponent(rest);
+  ...
+ 1032                  rest = rightHandOperand ? "@"+rightHandOperand + rest : "";
+ 1033                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1034:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1035                          if (rest) {
+ 1036                              found = found.concat(childComponent.querySelectorAllComponent(rest));
+ ....
+ 1044              } else {
+ 1045                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1046:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1047                          if (rest) {
+ 1048                              found = found.concat(childComponent.querySelectorAllComponent(rest, owner));
+ ....
+ 1839              if (!this._loadTemplatePromise) {
+ 1840                  var self = this;
+ 1841:                 info = Montage.getInfoForObject(this);
+ 1842  
+ 1843                  this._loadTemplatePromise = Template.getTemplateWithModuleId(
+ ....
+ 1873                  info;
+ 1874  
+ 1875:             info = Montage.getInfoForObject(this);
+ 1876              moduleId = info.moduleId;
+ 1877              slashIndex = moduleId.lastIndexOf("/");
+ ....
+ 1890      _deserializedFromTemplate: {
+ 1891          value: function (owner, label, documentPart) {
+ 1892:             Montage.getInfoForObject(this).label = label;
+ 1893              this._ownerDocumentPart = documentPart;
+ 1894  
+ ....
+ 1927          enumerable: false,
+ 1928          get: function () {
+ 1929:             var info = Montage.getInfoForObject(this);
+ 1930              var self = (info && !info.isInstance) ? this : Object.getPrototypeOf(this);
+ 1931              if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId") || !self._objectDescriptorModuleId) {
+ 1932:                 info = Montage.getInfoForObject(self);
+ 1933                  var moduleId = info.moduleId,
+ 1934                      slashIndex = moduleId.lastIndexOf("/"),
+
+/Users/hthetiot/projects/Kaazing/src/montage/ui/repetition.reel/repetition.js:
+ 1172              serialization = iterationTemplate.getSerialization();
+ 1173              serializationObject = serialization.getSerializationObject();
+ 1174:             label = Montage.getInfoForObject(this).label;
+ 1175  
+ 1176              this._iterationLabel = label + ":iteration";
+
+/Users/hthetiot/projects/Kaazing/src/montage/ui/succession.info/sample/ui/main.reel/main.js:
+   26  
+   27              // enable logger to work
+   28:             Montage.getInfoForObject(this).objectName = 'Foo';
+   29  
+   30              component.identifier = 'Foo' + this.fooCount;
+   ..
+   65  
+   66              // enable logger to work
+   67:             Montage.getInfoForObject(this).objectName = 'Bar';
+   68  
+   69              //component.identifier = 'Bar' + this.barCount;
+
+108 matches across 30 files
+
+
+Searching 3114 files for "getInfoForObject" (case sensitive)
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/logic/service/authorization-manager.js:
+   47      registerAuthorizationService: {
+   48          value: function(aDataService) {
+   49:             var info = Montage.getInfoForObject(aDataService);
+   50              this._registeredAuthorizationServicesByModuleId.set(info.moduleId,aDataService);
+   51  
+   ..
+   75          value: function(aDataService) {
+   76              var self = this,
+   77:                 aDataServiceInfo = Montage.getInfoForObject(aDataService),
+   78                  authorizationPromise = new Promise(function(resolve,reject){
+   79                  var authorizationServicesModuleIds = aDataService.authorizationServices,
+   ..
+  128                          if(!iAuthorizationPanel) {
+  129                              // Lookup if already created, else ....
+  130:                             var iPromise = Montage.getInfoForObject(iService).require.async(iAuthorizationPanelModuleId);
+  131  
+  132                              authorizationPanels.push(iPromise);
+  ...
+  164                                  // but the info conained "ui/sign-in.reel", causing the lookup to fail. We need to be careful and
+  165                                  // investigate a possible solution.
+  166:                                 iService = this._dataServicesForAuthorizationPanels.get(Montage.getInfoForObject(iAuthorizationPanelConstructor).moduleId)
+  167                                  this._dataServicesForAuthorizationPanels.set(iAuthorizationPanel,iService);
+  168                                  iAuthorizationPanel.dataService = iService;
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/composer/key-composer.js:
+  144  
+  145              if (this.identifier === null) {
+  146:                 this.identifier = Montage.getInfoForObject(this).label;
+  147              }
+  148  
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/core/core.js:
+  870  /**
+  871   * Get the metadata Montage has on the given object.
+  872:  * @function Montage.getInfoForObject
+  873   * @param {Object} object
+  874   * @returns {Object} If the object was exported by a module, `property` is the
+  ...
+  878   * constructors and prototypes from instances.
+  879   */
+  880: Montage.defineProperty(Montage, "getInfoForObject", {
+  881:     value: function Montage_getInfoForObject(object) {
+  882          var metadata;
+  883          var instanceMetadataDescriptor;
+  ...
+  896  
+  897              // don't modify the Object prototype, because this will cause
+  898:             // future calls to Montage.getInfoForObject on objects without
+  899              // their own _montage_metadata property to return this one
+  900              if (object === Object.prototype) {
+  ...
+ 1619      enumerable: false,
+ 1620      get:function () {
+ 1621:         var info = Montage.getInfoForObject(this);
+ 1622          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1623          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1624:             info = Montage.getInfoForObject(self);
+ 1625              var moduleId = info.moduleId,
+ 1626                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1645      enumerable: false,
+ 1646      get:function () {
+ 1647:         var info = Montage.getInfoForObject(this);
+ 1648          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1649          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1650:             info = Montage.getInfoForObject(self);
+ 1651              var moduleId = info.moduleId,
+ 1652                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1668      enumerable: false,
+ 1669      get:function () {
+ 1670:         var info = Montage.getInfoForObject(this);
+ 1671          var self = info && !info.isInstance ? this : this.constructor;
+ 1672          if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptor") || !self._objectDescriptor) {
+ ....
+ 1681                  enumerable: false,
+ 1682                  value: exports._objectDescriptorDescriptor.ObjectDescriptorModulePromise.then(function (ObjectDescriptor) {
+ 1683:                     var info = Montage.getInfoForObject(self);
+ 1684  
+ 1685                      return ObjectDescriptor.getObjectDescriptorWithModuleId(objectDescriptorModuleId, info.require)
+ ....
+ 1702      },
+ 1703      set:function (value) {
+ 1704:         var info = Montage.getInfoForObject(this);
+ 1705          var _objectDescriptorValue;
+ 1706          var self = (info && !info.isInstance) ? this : this.constructor;
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/core/deprecate.js:
+   73      Error.stackTraceLimit = 2;
+   74      if (typeof console !== "undefined" && typeof console.warn === "function") {
+   75:         scopeName = Montage.getInfoForObject(scope).objectName;
+   76  
+   77          if(alternative) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/core/meta/module-object-descriptor.js:
+  136      createDefaultObjectDescriptorForObject: {
+  137          value: function (object) {
+  138:             var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object;
+  139:             var info = Montage.getInfoForObject(target);
+  140              if (!info.objectName || !info.moduleId) {
+  141                  return Promise.reject("Cannot create module-object-descriptor for an object that has no been loaded from a module");
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/core/meta/object-descriptor.js:
+ 1196          value:function (object) {
+ 1197              if (object) {
+ 1198:                 var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object.prototype;
+ 1199:                 var info = Montage.getInfoForObject(target);
+ 1200  
+ 1201                  // Create `new this()` so that subclassing works
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/core/meta/object-property.js:
+   45              var info;
+   46              if (!prototype.hasOwnProperty("objectDescriptor")) {
+   47:                 info = Montage.getInfoForObject(prototype);
+   48                  if (info != null && info.isInstance === false) {
+   49                      if (objectDescriptor === undefined) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/core/serialization/serializer/montage-labeler.js:
+   70              if (identifier && this._labelRegexp.test(identifier)) {
+   71                  objectName = object.identifier;
+   72:             } else if (object && typeof object === "object" && "getInfoForObject" in object || "getInfoForObject" in object.constructor ) {
+   73:                 objectName = Montage.getInfoForObject(object).objectName;
+   74                  objectName = objectName.toLowerCase();
+   75              } else {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/core/serialization/serializer/montage-visitor.js:
+   36              } else if (object instanceof Alias) {
+   37                  return "Alias";
+   38:             } else if ("getInfoForObject" in object || "getInfoForObject" in object.constructor) {
+   39                  return "MontageObject";
+   40              } else if (object.thisIsAReferenceCreatedByMontageSerializer) {
+   ..
+  234      setObjectType: {
+  235          value: function (object, builderObject) {
+  236:             var isInstance = Montage.getInfoForObject(object).isInstance,
+  237                  locationId = this.getObjectLocationId(object),
+  238                  locationIdBuilderObject = this.builder.createString(locationId);
+  ...
+  248      getObjectModuleId: {
+  249          value: function (object) {
+  250:             var objectInfo = Montage.getInfoForObject(object);
+  251  
+  252              return this._require.identify(objectInfo.moduleId,
+  ...
+  259              var moduleId = this.getObjectModuleId(object),
+  260                  defaultObjectName,
+  261:                 objectInfo = Montage.getInfoForObject(object),
+  262                  objectName = objectInfo.objectName;
+  263  
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/core/uuid.js:
+   88  
+   89      var uuid = generate(),
+   90:         info = Montage.getInfoForObject(this);
+   91      try {
+   92          if (info !== null && info.isInstance === false) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/ui/component.js:
+  585              if (global._montage_le_flag) {
+  586              //jshint +W106
+  587:                 value.setAttribute(ATTR_LE_COMPONENT, Montage.getInfoForObject(this).moduleId);
+  588              }
+  589  
+  ...
+  817  
+  818              // Check if the template property is referring to this object at all.
+  819:             if (Montage.getInfoForObject(this).label !== componentLabel) {
+  820                  return;
+  821              }
+  ...
+  976  
+  977                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  978:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label) {
+  979                          if (rest) {
+  980                              return childComponent.querySelectorComponent(rest);
+  ...
+  991              } else {
+  992                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  993:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label) {
+  994                          if (rest) {
+  995                              return childComponent.querySelectorComponent(rest);
+  ...
+ 1032                  rest = rightHandOperand ? "@"+rightHandOperand + rest : "";
+ 1033                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1034:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1035                          if (rest) {
+ 1036                              found = found.concat(childComponent.querySelectorAllComponent(rest));
+ ....
+ 1044              } else {
+ 1045                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1046:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1047                          if (rest) {
+ 1048                              found = found.concat(childComponent.querySelectorAllComponent(rest, owner));
+ ....
+ 1839              if (!this._loadTemplatePromise) {
+ 1840                  var self = this;
+ 1841:                 info = Montage.getInfoForObject(this);
+ 1842  
+ 1843                  this._loadTemplatePromise = Template.getTemplateWithModuleId(
+ ....
+ 1873                  info;
+ 1874  
+ 1875:             info = Montage.getInfoForObject(this);
+ 1876              moduleId = info.moduleId;
+ 1877              slashIndex = moduleId.lastIndexOf("/");
+ ....
+ 1890      _deserializedFromTemplate: {
+ 1891          value: function (owner, label, documentPart) {
+ 1892:             Montage.getInfoForObject(this).label = label;
+ 1893              this._ownerDocumentPart = documentPart;
+ 1894  
+ ....
+ 1927          enumerable: false,
+ 1928          get: function () {
+ 1929:             var info = Montage.getInfoForObject(this);
+ 1930              var self = (info && !info.isInstance) ? this : Object.getPrototypeOf(this);
+ 1931              if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId") || !self._objectDescriptorModuleId) {
+ 1932:                 info = Montage.getInfoForObject(self);
+ 1933                  var moduleId = info.moduleId,
+ 1934                      slashIndex = moduleId.lastIndexOf("/"),
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/ui/repetition.reel/repetition.js:
+ 1172              serialization = iterationTemplate.getSerialization();
+ 1173              serializationObject = serialization.getSerializationObject();
+ 1174:             label = Montage.getInfoForObject(this).label;
+ 1175  
+ 1176              this._iterationLabel = label + ":iteration";
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-data/node_modules/montage/ui/succession.info/sample/ui/main.reel/main.js:
+   26  
+   27              // enable logger to work
+   28:             Montage.getInfoForObject(this).objectName = 'Foo';
+   29  
+   30              component.identifier = 'Foo' + this.fooCount;
+   ..
+   65  
+   66              // enable logger to work
+   67:             Montage.getInfoForObject(this).objectName = 'Bar';
+   68  
+   69              //component.identifier = 'Bar' + this.barCount;
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/composer/key-composer.js:
+  144  
+  145              if (this.identifier === null) {
+  146:                 this.identifier = Montage.getInfoForObject(this).label;
+  147              }
+  148  
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/core/core.js:
+  870  /**
+  871   * Get the metadata Montage has on the given object.
+  872:  * @function Montage.getInfoForObject
+  873   * @param {Object} object
+  874   * @returns {Object} If the object was exported by a module, `property` is the
+  ...
+  878   * constructors and prototypes from instances.
+  879   */
+  880: Montage.defineProperty(Montage, "getInfoForObject", {
+  881:     value: function Montage_getInfoForObject(object) {
+  882          var metadata;
+  883          var instanceMetadataDescriptor;
+  ...
+  896  
+  897              // don't modify the Object prototype, because this will cause
+  898:             // future calls to Montage.getInfoForObject on objects without
+  899              // their own _montage_metadata property to return this one
+  900              if (object === Object.prototype) {
+  ...
+ 1619      enumerable: false,
+ 1620      get:function () {
+ 1621:         var info = Montage.getInfoForObject(this);
+ 1622          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1623          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1624:             info = Montage.getInfoForObject(self);
+ 1625              var moduleId = info.moduleId,
+ 1626                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1645      enumerable: false,
+ 1646      get:function () {
+ 1647:         var info = Montage.getInfoForObject(this);
+ 1648          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1649          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1650:             info = Montage.getInfoForObject(self);
+ 1651              var moduleId = info.moduleId,
+ 1652                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1668      enumerable: false,
+ 1669      get:function () {
+ 1670:         var info = Montage.getInfoForObject(this);
+ 1671          var self = info && !info.isInstance ? this : this.constructor;
+ 1672          if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptor") || !self._objectDescriptor) {
+ ....
+ 1681                  enumerable: false,
+ 1682                  value: exports._objectDescriptorDescriptor.ObjectDescriptorModulePromise.then(function (ObjectDescriptor) {
+ 1683:                     var info = Montage.getInfoForObject(self);
+ 1684  
+ 1685                      return ObjectDescriptor.getObjectDescriptorWithModuleId(objectDescriptorModuleId, info.require)
+ ....
+ 1702      },
+ 1703      set:function (value) {
+ 1704:         var info = Montage.getInfoForObject(this);
+ 1705          var _objectDescriptorValue;
+ 1706          var self = (info && !info.isInstance) ? this : this.constructor;
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/core/deprecate.js:
+   73      Error.stackTraceLimit = 2;
+   74      if (typeof console !== "undefined" && typeof console.warn === "function") {
+   75:         scopeName = Montage.getInfoForObject(scope).objectName;
+   76  
+   77          if(alternative) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/core/meta/module-object-descriptor.js:
+  136      createDefaultObjectDescriptorForObject: {
+  137          value: function (object) {
+  138:             var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object;
+  139:             var info = Montage.getInfoForObject(target);
+  140              if (!info.objectName || !info.moduleId) {
+  141                  return Promise.reject("Cannot create module-object-descriptor for an object that has no been loaded from a module");
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/core/meta/object-descriptor.js:
+ 1196          value:function (object) {
+ 1197              if (object) {
+ 1198:                 var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object.prototype;
+ 1199:                 var info = Montage.getInfoForObject(target);
+ 1200  
+ 1201                  // Create `new this()` so that subclassing works
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/core/meta/object-property.js:
+   45              var info;
+   46              if (!prototype.hasOwnProperty("objectDescriptor")) {
+   47:                 info = Montage.getInfoForObject(prototype);
+   48                  if (info != null && info.isInstance === false) {
+   49                      if (objectDescriptor === undefined) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/core/serialization/serializer/montage-labeler.js:
+   70              if (identifier && this._labelRegexp.test(identifier)) {
+   71                  objectName = object.identifier;
+   72:             } else if (object && typeof object === "object" && "getInfoForObject" in object || "getInfoForObject" in object.constructor ) {
+   73:                 objectName = Montage.getInfoForObject(object).objectName;
+   74                  objectName = objectName.toLowerCase();
+   75              } else {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/core/serialization/serializer/montage-visitor.js:
+   36              } else if (object instanceof Alias) {
+   37                  return "Alias";
+   38:             } else if ("getInfoForObject" in object || "getInfoForObject" in object.constructor) {
+   39                  return "MontageObject";
+   40              } else if (object.thisIsAReferenceCreatedByMontageSerializer) {
+   ..
+  234      setObjectType: {
+  235          value: function (object, builderObject) {
+  236:             var isInstance = Montage.getInfoForObject(object).isInstance,
+  237                  locationId = this.getObjectLocationId(object),
+  238                  locationIdBuilderObject = this.builder.createString(locationId);
+  ...
+  248      getObjectModuleId: {
+  249          value: function (object) {
+  250:             var objectInfo = Montage.getInfoForObject(object);
+  251  
+  252              return this._require.identify(objectInfo.moduleId,
+  ...
+  259              var moduleId = this.getObjectModuleId(object),
+  260                  defaultObjectName,
+  261:                 objectInfo = Montage.getInfoForObject(object),
+  262                  objectName = objectInfo.objectName;
+  263  
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/core/uuid.js:
+   88  
+   89      var uuid = generate(),
+   90:         info = Montage.getInfoForObject(this);
+   91      try {
+   92          if (info !== null && info.isInstance === false) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/ui/component.js:
+  585              if (global._montage_le_flag) {
+  586              //jshint +W106
+  587:                 value.setAttribute(ATTR_LE_COMPONENT, Montage.getInfoForObject(this).moduleId);
+  588              }
+  589  
+  ...
+  817  
+  818              // Check if the template property is referring to this object at all.
+  819:             if (Montage.getInfoForObject(this).label !== componentLabel) {
+  820                  return;
+  821              }
+  ...
+  976  
+  977                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  978:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label) {
+  979                          if (rest) {
+  980                              return childComponent.querySelectorComponent(rest);
+  ...
+  991              } else {
+  992                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  993:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label) {
+  994                          if (rest) {
+  995                              return childComponent.querySelectorComponent(rest);
+  ...
+ 1032                  rest = rightHandOperand ? "@"+rightHandOperand + rest : "";
+ 1033                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1034:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1035                          if (rest) {
+ 1036                              found = found.concat(childComponent.querySelectorAllComponent(rest));
+ ....
+ 1044              } else {
+ 1045                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1046:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1047                          if (rest) {
+ 1048                              found = found.concat(childComponent.querySelectorAllComponent(rest, owner));
+ ....
+ 1839              if (!this._loadTemplatePromise) {
+ 1840                  var self = this;
+ 1841:                 info = Montage.getInfoForObject(this);
+ 1842  
+ 1843                  this._loadTemplatePromise = Template.getTemplateWithModuleId(
+ ....
+ 1873                  info;
+ 1874  
+ 1875:             info = Montage.getInfoForObject(this);
+ 1876              moduleId = info.moduleId;
+ 1877              slashIndex = moduleId.lastIndexOf("/");
+ ....
+ 1890      _deserializedFromTemplate: {
+ 1891          value: function (owner, label, documentPart) {
+ 1892:             Montage.getInfoForObject(this).label = label;
+ 1893              this._ownerDocumentPart = documentPart;
+ 1894  
+ ....
+ 1927          enumerable: false,
+ 1928          get: function () {
+ 1929:             var info = Montage.getInfoForObject(this);
+ 1930              var self = (info && !info.isInstance) ? this : Object.getPrototypeOf(this);
+ 1931              if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId") || !self._objectDescriptorModuleId) {
+ 1932:                 info = Montage.getInfoForObject(self);
+ 1933                  var moduleId = info.moduleId,
+ 1934                      slashIndex = moduleId.lastIndexOf("/"),
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/ui/repetition.reel/repetition.js:
+ 1172              serialization = iterationTemplate.getSerialization();
+ 1173              serializationObject = serialization.getSerializationObject();
+ 1174:             label = Montage.getInfoForObject(this).label;
+ 1175  
+ 1176              this._iterationLabel = label + ":iteration";
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage-testing/node_modules/montage/ui/succession.info/sample/ui/main.reel/main.js:
+   26  
+   27              // enable logger to work
+   28:             Montage.getInfoForObject(this).objectName = 'Foo';
+   29  
+   30              component.identifier = 'Foo' + this.fooCount;
+   ..
+   65  
+   66              // enable logger to work
+   67:             Montage.getInfoForObject(this).objectName = 'Bar';
+   68  
+   69              //component.identifier = 'Bar' + this.barCount;
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/composer/key-composer.js:
+  144  
+  145              if (this.identifier === null) {
+  146:                 this.identifier = Montage.getInfoForObject(this).label;
+  147              }
+  148  
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/core.js:
+  870  /**
+  871   * Get the metadata Montage has on the given object.
+  872:  * @function Montage.getInfoForObject
+  873   * @param {Object} object
+  874   * @returns {Object} If the object was exported by a module, `property` is the
+  ...
+  878   * constructors and prototypes from instances.
+  879   */
+  880: Montage.defineProperty(Montage, "getInfoForObject", {
+  881:     value: function Montage_getInfoForObject(object) {
+  882          var metadata;
+  883          var instanceMetadataDescriptor;
+  ...
+  896  
+  897              // don't modify the Object prototype, because this will cause
+  898:             // future calls to Montage.getInfoForObject on objects without
+  899              // their own _montage_metadata property to return this one
+  900              if (object === Object.prototype) {
+  ...
+ 1619      enumerable: false,
+ 1620      get:function () {
+ 1621:         var info = Montage.getInfoForObject(this);
+ 1622          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1623          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1624:             info = Montage.getInfoForObject(self);
+ 1625              var moduleId = info.moduleId,
+ 1626                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1645      enumerable: false,
+ 1646      get:function () {
+ 1647:         var info = Montage.getInfoForObject(this);
+ 1648          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1649          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1650:             info = Montage.getInfoForObject(self);
+ 1651              var moduleId = info.moduleId,
+ 1652                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1668      enumerable: false,
+ 1669      get:function () {
+ 1670:         var info = Montage.getInfoForObject(this);
+ 1671          var self = info && !info.isInstance ? this : this.constructor;
+ 1672          if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptor") || !self._objectDescriptor) {
+ ....
+ 1681                  enumerable: false,
+ 1682                  value: exports._objectDescriptorDescriptor.ObjectDescriptorModulePromise.then(function (ObjectDescriptor) {
+ 1683:                     var info = Montage.getInfoForObject(self);
+ 1684  
+ 1685                      return ObjectDescriptor.getObjectDescriptorWithModuleId(objectDescriptorModuleId, info.require)
+ ....
+ 1702      },
+ 1703      set:function (value) {
+ 1704:         var info = Montage.getInfoForObject(this);
+ 1705          var _objectDescriptorValue;
+ 1706          var self = (info && !info.isInstance) ? this : this.constructor;
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/deprecate.js:
+   73      Error.stackTraceLimit = 2;
+   74      if (typeof console !== "undefined" && typeof console.warn === "function") {
+   75:         scopeName = Montage.getInfoForObject(scope).objectName;
+   76  
+   77          if(alternative) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/meta/module-object-descriptor.js:
+  136      createDefaultObjectDescriptorForObject: {
+  137          value: function (object) {
+  138:             var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object;
+  139:             var info = Montage.getInfoForObject(target);
+  140              if (!info.objectName || !info.moduleId) {
+  141                  return Promise.reject("Cannot create module-object-descriptor for an object that has no been loaded from a module");
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/meta/object-descriptor.js:
+ 1196          value:function (object) {
+ 1197              if (object) {
+ 1198:                 var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object.prototype;
+ 1199:                 var info = Montage.getInfoForObject(target);
+ 1200  
+ 1201                  // Create `new this()` so that subclassing works
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/meta/object-property.js:
+   45              var info;
+   46              if (!prototype.hasOwnProperty("objectDescriptor")) {
+   47:                 info = Montage.getInfoForObject(prototype);
+   48                  if (info != null && info.isInstance === false) {
+   49                      if (objectDescriptor === undefined) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/serialization/serializer/montage-labeler.js:
+   70              if (identifier && this._labelRegexp.test(identifier)) {
+   71                  objectName = object.identifier;
+   72:             } else if (object && typeof object === "object" && "getInfoForObject" in object || "getInfoForObject" in object.constructor ) {
+   73:                 objectName = Montage.getInfoForObject(object).objectName;
+   74                  objectName = objectName.toLowerCase();
+   75              } else {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/serialization/serializer/montage-visitor.js:
+   36              } else if (object instanceof Alias) {
+   37                  return "Alias";
+   38:             } else if ("getInfoForObject" in object || "getInfoForObject" in object.constructor) {
+   39                  return "MontageObject";
+   40              } else if (object.thisIsAReferenceCreatedByMontageSerializer) {
+   ..
+  234      setObjectType: {
+  235          value: function (object, builderObject) {
+  236:             var isInstance = Montage.getInfoForObject(object).isInstance,
+  237                  locationId = this.getObjectLocationId(object),
+  238                  locationIdBuilderObject = this.builder.createString(locationId);
+  ...
+  248      getObjectModuleId: {
+  249          value: function (object) {
+  250:             var objectInfo = Montage.getInfoForObject(object);
+  251  
+  252              return this._require.identify(objectInfo.moduleId,
+  ...
+  259              var moduleId = this.getObjectModuleId(object),
+  260                  defaultObjectName,
+  261:                 objectInfo = Montage.getInfoForObject(object),
+  262                  objectName = objectInfo.objectName;
+  263  
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/uuid.js:
+   88  
+   89      var uuid = generate(),
+   90:         info = Montage.getInfoForObject(this);
+   91      try {
+   92          if (info !== null && info.isInstance === false) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/ui/component.js:
+  585              if (global._montage_le_flag) {
+  586              //jshint +W106
+  587:                 value.setAttribute(ATTR_LE_COMPONENT, Montage.getInfoForObject(this).moduleId);
+  588              }
+  589  
+  ...
+  817  
+  818              // Check if the template property is referring to this object at all.
+  819:             if (Montage.getInfoForObject(this).label !== componentLabel) {
+  820                  return;
+  821              }
+  ...
+  976  
+  977                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  978:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label) {
+  979                          if (rest) {
+  980                              return childComponent.querySelectorComponent(rest);
+  ...
+  991              } else {
+  992                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  993:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label) {
+  994                          if (rest) {
+  995                              return childComponent.querySelectorComponent(rest);
+  ...
+ 1032                  rest = rightHandOperand ? "@"+rightHandOperand + rest : "";
+ 1033                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1034:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1035                          if (rest) {
+ 1036                              found = found.concat(childComponent.querySelectorAllComponent(rest));
+ ....
+ 1044              } else {
+ 1045                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1046:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1047                          if (rest) {
+ 1048                              found = found.concat(childComponent.querySelectorAllComponent(rest, owner));
+ ....
+ 1839              if (!this._loadTemplatePromise) {
+ 1840                  var self = this;
+ 1841:                 info = Montage.getInfoForObject(this);
+ 1842  
+ 1843                  this._loadTemplatePromise = Template.getTemplateWithModuleId(
+ ....
+ 1873                  info;
+ 1874  
+ 1875:             info = Montage.getInfoForObject(this);
+ 1876              moduleId = info.moduleId;
+ 1877              slashIndex = moduleId.lastIndexOf("/");
+ ....
+ 1890      _deserializedFromTemplate: {
+ 1891          value: function (owner, label, documentPart) {
+ 1892:             Montage.getInfoForObject(this).label = label;
+ 1893              this._ownerDocumentPart = documentPart;
+ 1894  
+ ....
+ 1927          enumerable: false,
+ 1928          get: function () {
+ 1929:             var info = Montage.getInfoForObject(this);
+ 1930              var self = (info && !info.isInstance) ? this : Object.getPrototypeOf(this);
+ 1931              if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId") || !self._objectDescriptorModuleId) {
+ 1932:                 info = Montage.getInfoForObject(self);
+ 1933                  var moduleId = info.moduleId,
+ 1934                      slashIndex = moduleId.lastIndexOf("/"),
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/ui/repetition.reel/repetition.js:
+ 1172              serialization = iterationTemplate.getSerialization();
+ 1173              serializationObject = serialization.getSerializationObject();
+ 1174:             label = Montage.getInfoForObject(this).label;
+ 1175  
+ 1176              this._iterationLabel = label + ":iteration";
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/ui/succession.info/sample/ui/main.reel/main.js:
+   26  
+   27              // enable logger to work
+   28:             Montage.getInfoForObject(this).objectName = 'Foo';
+   29  
+   30              component.identifier = 'Foo' + this.fooCount;
+   ..
+   65  
+   66              // enable logger to work
+   67:             Montage.getInfoForObject(this).objectName = 'Bar';
+   68  
+   69              //component.identifier = 'Bar' + this.barCount;
+
+127 matches across 37 files
+
+
+Searching 806 files for "getInfoForObject" (case sensitive)
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/composer/key-composer.js:
+  144  
+  145              if (this.identifier === null) {
+  146:                 this.identifier = Montage.getInfoForObject(this).label;
+  147              }
+  148  
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/core.js:
+  870  /**
+  871   * Get the metadata Montage has on the given object.
+  872:  * @function Montage.getInfoForObject
+  873   * @param {Object} object
+  874   * @returns {Object} If the object was exported by a module, `property` is the
+  ...
+  878   * constructors and prototypes from instances.
+  879   */
+  880: Montage.defineProperty(Montage, "getInfoForObject", {
+  881:     value: function Montage_getInfoForObject(object) {
+  882          var metadata;
+  883          var instanceMetadataDescriptor;
+  ...
+  896  
+  897              // don't modify the Object prototype, because this will cause
+  898:             // future calls to Montage.getInfoForObject on objects without
+  899              // their own _montage_metadata property to return this one
+  900              if (object === Object.prototype) {
+  ...
+ 1619      enumerable: false,
+ 1620      get:function () {
+ 1621:         var info = Montage.getInfoForObject(this);
+ 1622          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1623          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1624:             info = Montage.getInfoForObject(self);
+ 1625              var moduleId = info.moduleId,
+ 1626                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1645      enumerable: false,
+ 1646      get:function () {
+ 1647:         var info = Montage.getInfoForObject(this);
+ 1648          var self = (info && !info.isInstance) ? this : this.constructor;
+ 1649          if ((!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId")) || (!self._objectDescriptorModuleId)) {
+ 1650:             info = Montage.getInfoForObject(self);
+ 1651              var moduleId = info.moduleId,
+ 1652                  slashIndex = moduleId.lastIndexOf("/"),
+ ....
+ 1668      enumerable: false,
+ 1669      get:function () {
+ 1670:         var info = Montage.getInfoForObject(this);
+ 1671          var self = info && !info.isInstance ? this : this.constructor;
+ 1672          if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptor") || !self._objectDescriptor) {
+ ....
+ 1681                  enumerable: false,
+ 1682                  value: exports._objectDescriptorDescriptor.ObjectDescriptorModulePromise.then(function (ObjectDescriptor) {
+ 1683:                     var info = Montage.getInfoForObject(self);
+ 1684  
+ 1685                      return ObjectDescriptor.getObjectDescriptorWithModuleId(objectDescriptorModuleId, info.require)
+ ....
+ 1702      },
+ 1703      set:function (value) {
+ 1704:         var info = Montage.getInfoForObject(this);
+ 1705          var _objectDescriptorValue;
+ 1706          var self = (info && !info.isInstance) ? this : this.constructor;
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/deprecate.js:
+   73      Error.stackTraceLimit = 2;
+   74      if (typeof console !== "undefined" && typeof console.warn === "function") {
+   75:         scopeName = Montage.getInfoForObject(scope).objectName;
+   76  
+   77          if(alternative) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/meta/module-object-descriptor.js:
+  136      createDefaultObjectDescriptorForObject: {
+  137          value: function (object) {
+  138:             var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object;
+  139:             var info = Montage.getInfoForObject(target);
+  140              if (!info.objectName || !info.moduleId) {
+  141                  return Promise.reject("Cannot create module-object-descriptor for an object that has no been loaded from a module");
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/meta/object-descriptor.js:
+ 1196          value:function (object) {
+ 1197              if (object) {
+ 1198:                 var target = Montage.getInfoForObject(object).isInstance ? Object.getPrototypeOf(object) : object.prototype;
+ 1199:                 var info = Montage.getInfoForObject(target);
+ 1200  
+ 1201                  // Create `new this()` so that subclassing works
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/meta/object-property.js:
+   45              var info;
+   46              if (!prototype.hasOwnProperty("objectDescriptor")) {
+   47:                 info = Montage.getInfoForObject(prototype);
+   48                  if (info != null && info.isInstance === false) {
+   49                      if (objectDescriptor === undefined) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/serialization/serializer/montage-labeler.js:
+   70              if (identifier && this._labelRegexp.test(identifier)) {
+   71                  objectName = object.identifier;
+   72:             } else if (object && typeof object === "object" && "getInfoForObject" in object || "getInfoForObject" in object.constructor ) {
+   73:                 objectName = Montage.getInfoForObject(object).objectName;
+   74                  objectName = objectName.toLowerCase();
+   75              } else {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/serialization/serializer/montage-visitor.js:
+   36              } else if (object instanceof Alias) {
+   37                  return "Alias";
+   38:             } else if ("getInfoForObject" in object || "getInfoForObject" in object.constructor) {
+   39                  return "MontageObject";
+   40              } else if (object.thisIsAReferenceCreatedByMontageSerializer) {
+   ..
+  234      setObjectType: {
+  235          value: function (object, builderObject) {
+  236:             var isInstance = Montage.getInfoForObject(object).isInstance,
+  237                  locationId = this.getObjectLocationId(object),
+  238                  locationIdBuilderObject = this.builder.createString(locationId);
+  ...
+  248      getObjectModuleId: {
+  249          value: function (object) {
+  250:             var objectInfo = Montage.getInfoForObject(object);
+  251  
+  252              return this._require.identify(objectInfo.moduleId,
+  ...
+  259              var moduleId = this.getObjectModuleId(object),
+  260                  defaultObjectName,
+  261:                 objectInfo = Montage.getInfoForObject(object),
+  262                  objectName = objectInfo.objectName;
+  263  
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/core/uuid.js:
+   88  
+   89      var uuid = generate(),
+   90:         info = Montage.getInfoForObject(this);
+   91      try {
+   92          if (info !== null && info.isInstance === false) {
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/ui/component.js:
+  585              if (global._montage_le_flag) {
+  586              //jshint +W106
+  587:                 value.setAttribute(ATTR_LE_COMPONENT, Montage.getInfoForObject(this).moduleId);
+  588              }
+  589  
+  ...
+  817  
+  818              // Check if the template property is referring to this object at all.
+  819:             if (Montage.getInfoForObject(this).label !== componentLabel) {
+  820                  return;
+  821              }
+  ...
+  976  
+  977                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  978:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label) {
+  979                          if (rest) {
+  980                              return childComponent.querySelectorComponent(rest);
+  ...
+  991              } else {
+  992                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+  993:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label) {
+  994                          if (rest) {
+  995                              return childComponent.querySelectorComponent(rest);
+  ...
+ 1032                  rest = rightHandOperand ? "@"+rightHandOperand + rest : "";
+ 1033                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1034:                     if (leftHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1035                          if (rest) {
+ 1036                              found = found.concat(childComponent.querySelectorAllComponent(rest));
+ ....
+ 1044              } else {
+ 1045                  for (i = 0, childComponent; (childComponent = childComponents[i]); i++) {
+ 1046:                     if (rightHandOperand === Montage.getInfoForObject(childComponent).label && (!owner || owner === childComponent.ownerComponent)) {
+ 1047                          if (rest) {
+ 1048                              found = found.concat(childComponent.querySelectorAllComponent(rest, owner));
+ ....
+ 1839              if (!this._loadTemplatePromise) {
+ 1840                  var self = this;
+ 1841:                 info = Montage.getInfoForObject(this);
+ 1842  
+ 1843                  this._loadTemplatePromise = Template.getTemplateWithModuleId(
+ ....
+ 1873                  info;
+ 1874  
+ 1875:             info = Montage.getInfoForObject(this);
+ 1876              moduleId = info.moduleId;
+ 1877              slashIndex = moduleId.lastIndexOf("/");
+ ....
+ 1890      _deserializedFromTemplate: {
+ 1891          value: function (owner, label, documentPart) {
+ 1892:             Montage.getInfoForObject(this).label = label;
+ 1893              this._ownerDocumentPart = documentPart;
+ 1894  
+ ....
+ 1927          enumerable: false,
+ 1928          get: function () {
+ 1929:             var info = Montage.getInfoForObject(this);
+ 1930              var self = (info && !info.isInstance) ? this : Object.getPrototypeOf(this);
+ 1931              if (!Object.getOwnPropertyDescriptor(self, "_objectDescriptorModuleId") || !self._objectDescriptorModuleId) {
+ 1932:                 info = Montage.getInfoForObject(self);
+ 1933                  var moduleId = info.moduleId,
+ 1934                      slashIndex = moduleId.lastIndexOf("/"),
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/ui/repetition.reel/repetition.js:
+ 1172              serialization = iterationTemplate.getSerialization();
+ 1173              serializationObject = serialization.getSerializationObject();
+ 1174:             label = Montage.getInfoForObject(this).label;
+ 1175  
+ 1176              this._iterationLabel = label + ":iteration";
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modules/montage/ui/succession.info/sample/ui/main.reel/main.js:
+   26  
+   27              // enable logger to work
+   28:             Montage.getInfoForObject(this).objectName = 'Foo';
+   29  
+   30              component.identifier = 'Foo' + this.fooCount;
+   ..
+   65  
+   66              // enable logger to work
+   67:             Montage.getInfoForObject(this).objectName = 'Bar';
+   68  
+   69              //component.identifier = 'Bar' + this.barCount;
+
+41 matches across 12 files
+
+
+Searching 398 files for "serializeObject" (case sensitive)
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/bindings/spec.js:
+ 1131              });
+ 1132  
+ 1133:             var serialization = serializer.serializeObject(target);
+ 1134              var labels = {};
+ 1135  
+ ....
+ 1174              });
+ 1175  
+ 1176:             serialization = serializer.serializeObject(target);
+ 1177              expect(JSON.parse(serialization)).toEqual(expectedSerialization);
+ 1178          });
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/core/localizer/serialization-spec.js:
+   74              objects = o;
+   75              setTimeout(function () {
+   76:                 var serialization = serializer.serializeObject(objects.target);
+   77                  callback(stripPP(serialization));
+   78              });
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/events/eventmanager-spec.js:
+ 1130                  sourceObject.addEventListener("action", actionListener, false);
+ 1131  
+ 1132:                 var serialization = serializer.serializeObject(sourceObject);
+ 1133                  var labels = {};
+ 1134                  labels.actioneventlistener = handlerObject;
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/meta/blueprint-spec.js:
+  208  
+  209              it("can serialize", function () {
+  210:                 var serializedBinder = new Serializer().initWithRequire(require).serializeObject(companyBinder);
+  211                  //console.log(serializedBinder);
+  212                  expect(serializedBinder).not.toBeNull();
+  213              });
+  214              it("can deserialize", function (done) {
+  215:                 var serializedBinder = new Serializer().initWithRequire(require).serializeObject(companyBinder);
+  216:                 var deserializer = new Deserializer().init(serializedBinder, require).deserializeObject().then(function (deserializedBinder) {
+  217                      var metadata = Montage.getInfoForObject(deserializedBinder);
+  218                      expect(serializedBinder).not.toBeNull();
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/meta/build-in-component-blueprint-spec.js:
+   47  //                expect(blueprint).toBeTruthy();
+   48  //                var serializer = new Serializer().initWithRequire(require);
+   49: //                var serializedDescription = serializer.serializeObject(blueprint);
+   50  //                console.log(serializedDescription);
+   51  //              }).finally(function () {
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/meta/component-blueprint-spec.js:
+   67              var blueprintPromise = component1.blueprint;
+   68              blueprintPromise.then(function (blueprint) {
+   69:                 var serializedDescription = serializer.serializeObject(blueprint);
+   70                  expect(serializedDescription).toBeTruthy();
+   71              }).finally(function () {
+   ..
+  113              blueprintPromise.then(function (blueprint) {
+  114                  expect(blueprint).toBeTruthy();
+  115:                 var serializedDescription = serializer.serializeObject(blueprint);
+  116                  expect(serializedDescription).toBeTruthy();
+  117              }).finally(function () {
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/meta/controller-blueprint-spec.js:
+   39              blueprintPromise.then(function (blueprint) {
+   40                  expect(blueprint).toBeTruthy();
+   41:                 var serializedDescription = serializer.serializeObject(blueprint);
+   42                  expect(serializedDescription).toBeTruthy();
+   43              }).finally(function () {
+   ..
+   79              blueprintPromise.then(function (blueprint) {
+   80                  expect(blueprint).toBeTruthy();
+   81:                 var serializedDescription = serializer.serializeObject(blueprint);
+   82                  expect(serializedDescription).toBeTruthy();
+   83                  //console.log(serializedDescription);
+   ..
+  112                  expect(blueprint.propertyDescriptorForName("customerList")).toBeTruthy();
+  113                  expect(blueprint.propertyDescriptorForName("customerSelectionList")).toBeTruthy();
+  114:                 var serializedDescription = serializer.serializeObject(blueprint);
+  115                  expect(serializedDescription).toBeTruthy();
+  116                  //console.log(serializedDescription);
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/meta/event-blueprint-spec.js:
+   70                  expectedSerialization = objectDescriptorSerialization;
+   71  
+   72:                 serialization = serializer.serializeObject(eventBlueprint);
+   73                  expect(JSON.parse(serialization))
+   74                      .toEqual(expectedSerialization);
+   ..
+   77              xit("should deserialize correctly", function (done) {
+   78                  var deserializer = new Deserializer().init(JSON.stringify(blueprintSerialization), require);
+   79:                 deserializer.deserializeObject({blueprint_testblueprint: blueprint}).then(function (deserialized) {
+   80                      expect(deserialized).toEqual(eventBlueprint);
+   81                  }).finally(function () {
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/meta/module-blueprint-spec.js:
+   72                  expectedSerialization = objectDescriptorSerialization;
+   73  
+   74:                 serialization = serializer.serializeObject(blueprintOne);
+   75                  expect(JSON.parse(serialization))
+   76                      .toEqual(expectedSerialization);
+   ..
+   80                  blueprintOne.module = null;
+   81                  expect(function () {
+   82:                     serializer.serializeObject(blueprintOne);
+   83                  }).toThrow();
+   84              });
+   ..
+   87                  blueprintOne.exportName = null;
+   88                  expect(function () {
+   89:                     serializer.serializeObject(blueprintOne);
+   90                  }).toThrow();
+   91              });
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/serialization/montage-deserializer-spec.js:
+   65                  serializationString, require);
+   66  
+   67:             deserializer.deserializeObject().then(function (root) {
+   68                  expect(Object.getPrototypeOf(root)).toBe(Montage.prototype);
+   69                  expect(root.number).toBe(42);
+   ..
+   97              deserializer.init(serializationString, require);
+   98  
+   99:             deserializer.deserializeObject().then(function (root) {
+  100                  expect(root.oneprop.prop).toBe(42);
+  101              }).finally(function () {
+  ...
+  124                  serializationString, require);
+  125  
+  126:             deserializer.deserializeObject(instances).then(function (root) {
+  127                  expect(root.simple).toBe(simple);
+  128              }).catch(function(reason) {
+  ...
+  156                  serializationString, require);
+  157  
+  158:             deserializer.deserializeObject(instances).then(function (root) {
+  159                  expect(root.simple).toBe(simple);
+  160              }).catch(function(reason) {
+  ...
+  180                  serializationString, require);
+  181  
+  182:             deserializer.deserializeObject().then(function (root) {
+  183                  expect(root).toBe(objects.Singleton.prototype.instance);
+  184              }).catch(function(reason) {
+  ...
+  208                  serializationString, require);
+  209  
+  210:             deserializer.deserializeObject(instances).then(function (root) {
+  211                  expect(root).toBe(instances.root);
+  212                  expect(instances.root.number).toBe(42);
+  ...
+  482  
+  483              deserializer.init(serializationString, require);
+  484:             deserializer.deserializeObject().then(function (root) {
+  485                  var info = Montage.getInfoForObject(root);
+  486                  expect(Object.getPrototypeOf(root)).toBe(objects.TestobjectsV2.prototype);
+  ...
+  507  
+  508              deserializer.init(serializationString, require);
+  509:             deserializer.deserializeObject().then(function (root) {
+  510                  var info = Montage.getInfoForObject(root);
+  511  
+  ...
+  537  
+  538              deserializer.init(serializationString, require);
+  539:             deserializer.deserializeObject().then(function (root) {
+  540                  var info = Montage.getInfoForObject(root);
+  541  
+  ...
+  564  
+  565              deserializer.init(serializationString, require);
+  566:             deserializer.deserializeObject().then(function (root) {
+  567                  var info = Montage.getInfoForObject(root);
+  568  
+  ...
+  593  
+  594              deserializer.init(serializationString, require);
+  595:             deserializer.deserializeObject().then(function (root) {
+  596                  var info = Montage.getInfoForObject(root);
+  597  
+  ...
+  618  
+  619              deserializer.init(serializationString, require);
+  620:             deserializer.deserializeObject().then(function (json) {
+  621                  expect("root" in json).toBe(true);
+  622                  expect(json.root.foo).toBe("bar");
+  ...
+  635  
+  636              deserializer.init(serializationString, require);
+  637:             deserializer.deserializeObject().then(function (object) {
+  638                      var info = Montage.getInfoForObject(object);
+  639                      expect(info.moduleId).toBe("core/meta/object-descriptor");
+  ...
+  732  
+  733              //for (var i = 0; i < 3; i++) {
+  734:             //    deserializer.deserializeObjectWithElement(root, function (object) {
+  735              //        expect(object.element instanceof Element).toBe(true);
+  736              //        expect(object.element.textContent).toBe("content");
+  ...
+  776          //
+  777          //    for (var i = 0; i < 3; i++) {
+  778:         //        deserializer.deserializeObjectWithElement(root, function (object) {
+  779          //            expect(object.element instanceof Element).toBe(true);
+  780          //            expect(object.element.textContent).toBe("content2");
+  ...
+  794          //
+  795          //    for (var i = 0; i < 3; i++) {
+  796:         //        deserializer.deserializeObjectWithElement(root, function (object) {
+  797          //            expect(object.element instanceof Element).toBe(true);
+  798          //            expect(object.element.textContent).toBe("content");
+  ...
+  812          //
+  813          //    for (var i = 0; i < 3; i++) {
+  814:         //        deserializer.deserializeObjectWithElement(root, function (object) {
+  815          //            expect(object.element instanceof Element).toBe(true);
+  816          //            expect(object.element.textContent).toBe("content");
+  ...
+  831          //
+  832          //    for (var i = 0; i < 3; i++) {
+  833:         //        deserializer.deserializeObjectWithElement(root, function (object) {
+  834          //            expect(object.element instanceof Element).toBe(true);
+  835          //            expect(object.element.textContent).toBe("content");
+  ...
+  851          //
+  852          //    for (var i = 0; i < 3; i++) {
+  853:         //        deserializer.deserializeObjectWithElement(root, function (object) {
+  854          //            expect(object.element instanceof Element).toBe(true);
+  855          //            expect(object.element.textContent).toBe("content");
+  ...
+  872          //
+  873          //    for (var i = 0; i < 3; i++) {
+  874:         //        deserializer.deserializeObjectWithElement(root, function (object) {
+  875          //            expect(object.element instanceof Element).toBe(true);
+  876          //            expect(object.element.textContent).toBe("content2");
+  ...
+  892          //
+  893          //    for (var i = 0; i < 3; i++) {
+  894:         //        deserializer.deserializeObjectWithElement(root, function (object) {
+  895          //            expect(object.element instanceof Element).toBe(true);
+  896          //            expect(object.element.textContent).toBe("content");
+  ...
+  912          //
+  913          //    for (var i = 0; i < 3; i++) {
+  914:         //        deserializer.deserializeObjectWithElement(root, function (object) {
+  915          //            expect(object.element instanceof Element).toBe(true);
+  916          //            expect(object.element.textContent).toBe("content");
+  ...
+  933                  serializationString, require);
+  934  
+  935:             deserializer.deserializeObject().then(function (root) {
+  936                  // module is now absolute from the root of the test package
+  937                  expect(root.id).toBe("spec/serialization/testobjects-v2");
+  ...
+  955                      serializationString, pkg1);
+  956  
+  957:                 deserializer.deserializeObject().then(function (root) {
+  958                      expect(root.id).toBe("pass");
+  959                      expect(root.require.location).toBe(pkg1.location);
+  ...
+ 1000              };
+ 1001  
+ 1002:             deserializer.deserializeObject().then(function (root) {
+ 1003                  expect(root.prop1).toBeNull();
+ 1004                  if (defaultEventManager.registeredEventListeners.action) {
+ ....
+ 1027              };
+ 1028  
+ 1029:             deserializer.deserializeObject().then(function (root) {
+ 1030                  expect(type).toBe("prototype");
+ 1031                  expect(typeValue).toBe("spec/serialization/testobjects-v2[CustomDeserialization]");
+ ....
+ 1056              };
+ 1057  
+ 1058:             deserializer.deserializeObject().then(function (root) {
+ 1059                  expect(type).toBe("object");
+ 1060                  expect(typeValue).toBe("spec/serialization/testobjects-v2[CustomDeserialization]");
+ ....
+ 1078              };
+ 1079  
+ 1080:             deserializer.deserializeObject().then(function (root) {
+ 1081                  expect(prop1).toBe(3.14);
+ 1082              }).catch(function(reason) {
+ ....
+ 1098              };
+ 1099  
+ 1100:             deserializer.deserializeObject().then(function (root) {
+ 1101                  expect(root.prop1).toBe(3.14);
+ 1102                  if (defaultEventManager.registeredEventListeners.action) {
+ ....
+ 1123              };
+ 1124  
+ 1125:             deserializer.deserializeObject().then(function (root) {
+ 1126                  var registeredEventListenersForRootAction = defaultEventManager.registeredEventListenersForEventType_onTarget_("action",root);
+ 1127                  expect(root.prop1).toBe(3.14);
+ ....
+ 1147              };
+ 1148  
+ 1149:             deserializer.deserializeObject().then(function (root) {
+ 1150                  expect(root.prop1).toBe(3.14);
+ 1151                  if (defaultEventManager.registeredEventListeners.action) {
+ ....
+ 1173              };
+ 1174  
+ 1175:             deserializer.deserializeObject().then(function (root) {
+ 1176                  var registeredEventListenersForRootAction = defaultEventManager.registeredEventListenersForEventType_onTarget_("action",root);
+ 1177                  expect(root.prop1).toBe(3.14);
+ ....
+ 1196              };
+ 1197  
+ 1198:             deserializer.deserializeObject().then(function (root) {
+ 1199                  expect(root).toBe(newRoot);
+ 1200              }).catch(function(reason) {
+ ....
+ 1332                  deserializer = new Deserializer().init(serializationString, require);
+ 1333  
+ 1334:             deserializer.deserializeObject().then(function(object) {
+ 1335                  expect(object).toBe("a string");
+ 1336              }).finally(function () {
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/serialization/montage-serializer-spec.js:
+  120              };
+  121  
+  122:             serialization = serializer.serializeObject(object);
+  123              expect(JSON.parse(serialization)).toEqual(expectedSerialization);
+  124          });
+  ...
+  136                  };
+  137  
+  138:                 serialization = serializer.serializeObject(object);
+  139                  expect(JSON.parse(serialization))
+  140                      .toEqual(expectedSerialization);
+  ...
+  152                  };
+  153  
+  154:                 serialization = serializer.serializeObject(object);
+  155                  expect(JSON.parse(serialization))
+  156                      .toEqual(expectedSerialization);
+  ...
+  168                  };
+  169  
+  170:                 serialization = serializer.serializeObject(object);
+  171                  expect(JSON.parse(serialization))
+  172                      .toEqual(expectedSerialization);
+  ...
+  186                  };
+  187  
+  188:                 serialization = serializer.serializeObject(object);
+  189                  expect(JSON.parse(serialization))
+  190                      .toEqual(expectedSerialization);
+  ...
+  202                  };
+  203  
+  204:                 serialization = serializer.serializeObject(object);
+  205                  expect(JSON.parse(serialization))
+  206                      .toEqual(expectedSerialization);
+  ...
+  219              };
+  220  
+  221:             serialization = serializer.serializeObject(object);
+  222              expect(JSON.parse(serialization))
+  223                  .toEqual(expectedSerialization);
+  ...
+  232              };
+  233  
+  234:             serialization = serializer.serializeObject(object);
+  235              expect(JSON.parse(serialization)).toEqual(expectedSerialization);
+  236          });
+  ...
+  255                  };
+  256  
+  257:                 serialization = serializer.serializeObject(object);
+  258                  expect(JSON.parse(serialization))
+  259                  .toEqual(expectedSerialization);
+  ...
+  274                  };
+  275  
+  276:                 serialization = serializer.serializeObject(object);
+  277                  expect(JSON.parse(serialization))
+  278                  .toEqual(expectedSerialization);
+  ...
+  293                  };
+  294  
+  295:                 serialization = serializer.serializeObject(object);
+  296                  expect(JSON.parse(serialization))
+  297                  .toEqual(expectedSerialization);
+  ...
+  311                  };
+  312  
+  313:                 serialization = serializer.serializeObject(object);
+  314                  expect(JSON.parse(serialization))
+  315                  .toEqual(expectedSerialization);
+  ...
+  334                  object.prop = element;
+  335  
+  336:                 serialization = serializer.serializeObject(object);
+  337  
+  338                  expect(JSON.parse(serialization))
+  ...
+  360                  object.prop2 = element;
+  361  
+  362:                 serialization = serializer.serializeObject(object);
+  363                  expect(JSON.parse(serialization))
+  364                  .toEqual(expectedSerialization);
+  ...
+  379                  object.setAttribute("data-montage-id", "id");
+  380  
+  381:                 serialization = serializer.serializeObject(object);
+  382  
+  383                  expect(JSON.parse(serialization))
+  ...
+  398                  };
+  399  
+  400:                 serialization = serializer.serializeObject(object);
+  401                  expect(JSON.parse(serialization))
+  402                  .toEqual(expectedSerialization);
+  ...
+  421                  object.prop = ref;
+  422  
+  423:                 serialization = serializer.serializeObject(object);
+  424  
+  425                  expect(JSON.parse(serialization))
+  ...
+  447                  object.prop2 = ref;
+  448  
+  449:                 serialization = serializer.serializeObject(object);
+  450                  expect(JSON.parse(serialization))
+  451                  .toEqual(expectedSerialization);
+  ...
+  464                  };
+  465  
+  466:                 serialization = serializer.serializeObject(object);
+  467  
+  468                  expect(JSON.parse(serialization))
+  ...
+  481  
+  482                  expect(function () {
+  483:                     serialization = serializer.serializeObject(object);
+  484                  }).toThrow();
+  485              });
+  ...
+  504                  object.prop = undefined;
+  505  
+  506:                 serialization = serializer.serializeObject(object);
+  507                  expect(JSON.parse(serialization))
+  508                  .toEqual(expectedSerialization);
+  ...
+  526                  object.prop = [1, 2, 3, 4, 5];
+  527  
+  528:                 serialization = serializer.serializeObject(object);
+  529                  expect(JSON.parse(serialization))
+  530                  .toEqual(expectedSerialization);
+  ...
+  546                  };
+  547  
+  548:                 serialization = serializer.serializeObject(object);
+  549                  expect(JSON.parse(serialization)).toEqual(expectedSerialization);
+  550              });
+  ...
+  565                  };
+  566  
+  567:                 serialization = serializer.serializeObject(object);
+  568                  expect(JSON.parse(serialization))
+  569                  .toEqual(expectedSerialization);
+  ...
+  586                  };
+  587  
+  588:                 serialization = serializer.serializeObject(object);
+  589                  expect(JSON.parse(serialization))
+  590                  .toEqual(expectedSerialization);
+  ...
+  626                  object.prop2a = object.prop2b = prop2;
+  627  
+  628:                 serialization = serializer.serializeObject(object);
+  629                  expect(JSON.parse(serialization))
+  630                  .toEqual(expectedSerialization);
+  ...
+  659                  object.prop1a = empty;
+  660                  object.prop2a = empty;
+  661:                 serialization = serializer.serializeObject(object);
+  662  
+  663                  expect(JSON.parse(serialization))
+  ...
+  691                  object.prop1a = empty;
+  692                  object.prop2a = empty;
+  693:                 serialization = serializer.serializeObject(object);
+  694  
+  695                  expect(JSON.parse(serialization))
+  ...
+  725              object.prop = simple;
+  726  
+  727:             serialization = serializer.serializeObject(object);
+  728              expect(JSON.parse(serialization)).toEqual(expectedSerialization);
+  729          });
+  ...
+  777                  object.prop = object;
+  778  
+  779:                 serialization = serializer.serializeObject(object);
+  780                  expect(JSON.parse(serialization))
+  781                  .toEqual(expectedSerialization);
+  ...
+  809                  oneProp.prop = object;
+  810  
+  811:                 serialization = serializer.serializeObject(object);
+  812                  expect(JSON.parse(serialization))
+  813                  .toEqual(expectedSerialization);
+  ...
+  834                  };
+  835  
+  836:                 serialization = serializer.serializeObject(object);
+  837                  expect(JSON.parse(serialization))
+  838                  .toEqual(expectedSerialization);
+  ...
+  865                  };
+  866  
+  867:                 serialization = serializer.serializeObject(object);
+  868                  expect(JSON.parse(serialization))
+  869                  .toEqual(expectedSerialization);
+  ...
+  890                  };
+  891  
+  892:                 serialization = serializer.serializeObject(object);
+  893                  expect(JSON.parse(serialization))
+  894                  .toEqual(expectedSerialization);
+  ...
+  919                  };
+  920  
+  921:                 serialization = serializer.serializeObject(object);
+  922                  expect(JSON.parse(serialization))
+  923                  .toEqual(expectedSerialization);
+  ...
+  948                  };
+  949  
+  950:                 serialization = serializer.serializeObject(object);
+  951  
+  952                  expect(JSON.parse(serialization))
+  ...
+  978                  };
+  979  
+  980:                 serialization = serializer.serializeObject(object);
+  981                  expect(JSON.parse(serialization))
+  982                  .toEqual(expectedSerialization);
+  ...
+ 1006                  };
+ 1007  
+ 1008:                 serialization = serializer.serializeObject(object);
+ 1009                  expect(JSON.parse(serialization))
+ 1010                  .toEqual(expectedSerialization);
+ ....
+ 1026                  };
+ 1027  
+ 1028:                 serialization = serializer.serializeObject(object);
+ 1029                  expect(JSON.parse(serialization))
+ 1030                  .toEqual(expectedSerialization);
+ ....
+ 1073                  };
+ 1074  
+ 1075:                 serialization = serializer.serializeObject(object);
+ 1076                  expect(JSON.parse(serialization))
+ 1077                  .toEqual(expectedSerialization);
+ ....
+ 1098                  };
+ 1099  
+ 1100:                 serialization = serializer.serializeObject(object);
+ 1101                  expect(JSON.parse(serialization))
+ 1102                  .toEqual(expectedSerialization);
+ ....
+ 1121                  };
+ 1122  
+ 1123:                 serialization = serializer.serializeObject(object);
+ 1124                  expect(JSON.parse(serialization))
+ 1125                  .toEqual(expectedSerialization);
+ ....
+ 1148                  };
+ 1149  
+ 1150:                 serialization = serializer.serializeObject(object);
+ 1151                  expect(JSON.parse(serialization))
+ 1152                  .toEqual(expectedSerialization);
+ ....
+ 1174                  };
+ 1175  
+ 1176:                 serialization = serializer.serializeObject(object);
+ 1177                  expect(JSON.parse(serialization))
+ 1178                  .toEqual(expectedSerialization);
+ ....
+ 1197                  };
+ 1198  
+ 1199:                 serialization = serializer.serializeObject(object);
+ 1200                  expect(JSON.parse(serialization))
+ 1201                  .toEqual(expectedSerialization);
+ ....
+ 1228                  };
+ 1229  
+ 1230:                 serialization = serializer.serializeObject(object);
+ 1231                  expect(JSON.parse(serialization))
+ 1232                  .toEqual(expectedSerialization);
+ ....
+ 1253                  };
+ 1254  
+ 1255:                 serialization = serializer.serializeObject(object);
+ 1256                  expect(JSON.parse(serialization))
+ 1257                  .toEqual(expectedSerialization);
+ ....
+ 1277                  };
+ 1278  
+ 1279:                 serialization = serializer.serializeObject(object);
+ 1280                  expect(JSON.parse(serialization))
+ 1281                  .toEqual(expectedSerialization);
+ ....
+ 1301                  };
+ 1302  
+ 1303:                 serialization = serializer.serializeObject(object);
+ 1304                  expect(JSON.parse(serialization))
+ 1305                  .toEqual(expectedSerialization);
+ ....
+ 1340                  };
+ 1341  
+ 1342:                 serialization = serializer.serializeObject(object);
+ 1343  
+ 1344                  expect(JSON.parse(serialization))
+ ....
+ 1380                  };
+ 1381  
+ 1382:                 serialization = serializer.serializeObject(object);
+ 1383  
+ 1384                  expect(JSON.parse(serialization))
+ ....
+ 1432                  oneProp.prop = oneProp;
+ 1433  
+ 1434:                 serialization = serializer.serializeObject(object);
+ 1435                  expect(JSON.parse(serialization))
+ 1436                  .toEqual(expectedSerialization);
+ ....
+ 1459                  oneProp.prop = object;
+ 1460  
+ 1461:                 serialization = serializer.serializeObject(object);
+ 1462                  expect(JSON.parse(serialization))
+ 1463                  .toEqual(expectedSerialization);
+ ....
+ 1557                  };
+ 1558  
+ 1559:                 serialization = serializer.serializeObject(object);
+ 1560                  expect(JSON.parse(serialization))
+ 1561                  .toEqual(expectedSerialization);
+ ....
+ 1592                  };
+ 1593  
+ 1594:                 serialization = serializer.serializeObject(object);
+ 1595                  expect(JSON.parse(serialization))
+ 1596                  .toEqual(expectedSerialization);
+ ....
+ 1622                  };
+ 1623  
+ 1624:                 serialization = serializer.serializeObject(object);
+ 1625                  expect(JSON.parse(serialization))
+ 1626                  .toEqual(expectedSerialization);
+ ....
+ 1650                  };
+ 1651  
+ 1652:                 serialization = serializer.serializeObject(object);
+ 1653                  expect(JSON.parse(serialization))
+ 1654                  .toEqual(expectedSerialization);
+ ....
+ 1670                  };
+ 1671  
+ 1672:                 serialization = serializer.serializeObject(object);
+ 1673                  expect(JSON.parse(serialization))
+ 1674                  .toEqual(expectedSerialization);
+ ....
+ 1745                  empty.identifier = "anObject";
+ 1746  
+ 1747:                 serialization = serializer.serializeObject(object);
+ 1748                  expect(JSON.parse(serialization))
+ 1749                  .toEqual(expectedSerialization);
+ ....
+ 1776                  empty.identifier = "an-object";
+ 1777  
+ 1778:                 serialization = serializer.serializeObject(object);
+ 1779                  expect(JSON.parse(serialization))
+ 1780                  .toEqual(expectedSerialization);
+ ....
+ 1832  
+ 1833                  object.referenceProp = empty;
+ 1834:                 serialization = serializer.serializeObject(object);
+ 1835                  expect(JSON.parse(serialization))
+ 1836                  .toEqual(expectedSerialization);
+ ....
+ 1848                  };
+ 1849  
+ 1850:                 serialization = serializer.serializeObject(object);
+ 1851                  externalObjects = serializer.getExternalObjects();
+ 1852  
+ ....
+ 1866                  };
+ 1867  
+ 1868:                 serialization = serializer.serializeObject(object);
+ 1869                  externalObjects = serializer.getExternalObjects();
+ 1870  
+ ....
+ 1901                  serializer.initWithRequire(require);
+ 1902  
+ 1903:                 serialization = serializer.serializeObject(object);
+ 1904                  expect(JSON.parse(serialization))
+ 1905                  .toEqual(expectedSerialization);
+ ....
+ 1936                  serializer.initWithRequire(require);
+ 1937  
+ 1938:                 serialization = serializer.serializeObject(object);
+ 1939  
+ 1940                  expect(JSON.parse(serialization))
+ ....
+ 1983                  serializer.initWithRequire(require);
+ 1984  
+ 1985:                 serialization = serializer.serializeObject(object);
+ 1986  
+ 1987                  expect(JSON.parse(serialization))
+ ....
+ 2030                  serializer.initWithRequire(require);
+ 2031  
+ 2032:                 serialization = serializer.serializeObject(object);
+ 2033                  expect(JSON.parse(serialization))
+ 2034                  .toEqual(expectedSerialization);
+ ....
+ 2067                  serializer.initWithRequire(require);
+ 2068  
+ 2069:                 serialization = serializer.serializeObject(object);
+ 2070                  expect(JSON.parse(serialization))
+ 2071                  .toEqual(expectedSerialization);
+ ....
+ 2158                  };
+ 2159  
+ 2160:                 serialization = serializer.serializeObject(object);
+ 2161                  expect(JSON.parse(serialization))
+ 2162                      .toEqual(expectedSerialization);
+ ....
+ 2184                  };
+ 2185  
+ 2186:                 serialization = serializer.serializeObject(object);
+ 2187                  expect(JSON.parse(serialization))
+ 2188                      .toEqual(expectedSerialization);
+ ....
+ 2200                  };
+ 2201  
+ 2202:                 serialization = serializer.serializeObject(object);
+ 2203                  expect(JSON.parse(serialization))
+ 2204                      .toEqual(expectedSerialization);
+ ....
+ 2227                  };
+ 2228  
+ 2229:                 serialization = serializer.serializeObject(object);
+ 2230                  expect(JSON.parse(serialization))
+ 2231                      .toEqual(expectedSerialization);
+ ....
+ 2247                  };
+ 2248  
+ 2249:                 serialization = serializer.serializeObject(object);
+ 2250                  expect(JSON.parse(serialization))
+ 2251                      .toEqual(expectedSerialization);
+ ....
+ 2267              };
+ 2268  
+ 2269:             serialization = serializer.serializeObject(object);
+ 2270              expect(JSON.parse(serialization)).toEqual(expectedSerialization);
+ 2271          });
+ ....
+ 2283                  };
+ 2284  
+ 2285:                 serialization = serializer.serializeObject(object);
+ 2286                  expect(JSON.parse(serialization))
+ 2287                      .toEqual(expectedSerialization);
+ ....
+ 2309                  };
+ 2310  
+ 2311:                 serialization = serializer.serializeObject(object);
+ 2312                  expect(JSON.parse(serialization))
+ 2313                      .toEqual(expectedSerialization);
+ ....
+ 2337                  };
+ 2338  
+ 2339:                 serialization = serializer.serializeObject(object);
+ 2340                  expect(JSON.parse(serialization))
+ 2341                      .toEqual(expectedSerialization);
+ ....
+ 2368                  };
+ 2369  
+ 2370:                 serialization = serializer.serializeObject(object);
+ 2371                  expect(JSON.parse(serialization))
+ 2372                      .toEqual(expectedSerialization);
+ ....
+ 2388                  };
+ 2389  
+ 2390:                 serialization = serializer.serializeObject(object);
+ 2391                  expect(JSON.parse(serialization))
+ 2392                      .toEqual(expectedSerialization);
+
+/Users/hthetiot/projects/Kaazing/src/montage/test/spec/serialization/visitor-spec.js:
+   58              };
+   59  
+   60:             serialization = serializer.serializeObject(object);
+   61              expect(JSON.parse(serialization))
+   62                  .toEqual(expectedSerialization);
+
+132 matches across 12 files
+
+
+Searching 398 files for "fineProperty(Montage, "getInfoForObject", {" (case sensitive)
+
+0 matches
+
+Searching 398 files for "_visitValue:" (case sensitive)
+
+0 matches
+
+Searching 1 file for "_visitValue:" (case sensitive)
+
+/Users/hthetiot/projects/Kaazing/src/montage-data-server/node_modudes/montage/:
+    ERROR: Unable to open file
+
+0 matches
