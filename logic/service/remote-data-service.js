@@ -17,8 +17,15 @@ exports.RemoteDataService = HttpService.specialize({
 
     fetchRawData: {
         value: function (stream) {
-            return this.fetchRawDataUsingParams(stream);
-            //return this.fetchRawDataWithQuery(stream);
+            
+            // Using simple form of serialisation no montage-serializer
+            //return this.fetchRawDataUsingParams(stream);
+                
+            // Using montage-serializer on DataQuery
+            return this.fetchRawDataWithQuery(stream);
+            
+            // Using montage-serializer on DataQuery with POST to prevent 2048 query param 
+            // limit issue with large query
             //return this.fetchRawDataWithBody(stream);
         }
     },
