@@ -3,15 +3,15 @@
   "version": "0.0.1",
   "dependencies": {
     "http2": "^3.3.6",
-    "montage": "hthetiot/montage#upgrade_test",
-    "montage-data": "montagestudio/montage-data#npm",
-    "mr": "hthetiot/mr#npmv3",
+    "montage": "git://github.com/hthetiot/montage#upgrade_test",
+    "montage-data": "git://github.com/montagestudio/montage-data#npm",
+    "mr": "montagejs/mr#master",
     "xhr2": "^0.1.4"
   },
   "devDependencies": {
     "jasmine-console-reporter": "^1.2.7",
     "jasmine-core": "^2.5.2",
-    "montage-testing": "hthetiot/montage-testing#upgrade"
+    "montage-testing": "git://github.com/montagejs/montage-testing#master"
   },
   "private": true
 }

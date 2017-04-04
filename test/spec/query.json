@@ -1,6 +1,6 @@
 {
   "weatherreport": {
-    "object": "logic/model/weather-report",
+    "object": "sample/logic/model/weather-report",
     "properties": {
       "identifier": null
     }

@@ -3,8 +3,7 @@ global.XMLHttpRequest = require('xhr2');
 var DataService = require("montage-data/logic/service/data-service").DataService,
     DataSelector = require("montage-data/logic/service/data-selector").DataSelector
     Criteria = require("montage/core/criteria").Criteria,
-    WeatherReport = require("logic/model/weather-report").WeatherReport,
-    WeatherService = require("logic/service/weather-service").WeatherService;
+    WeatherService = require("sample/logic/service/weather-service").WeatherService;
 	deserialize = require("montage/core/serialization/deserializer/montage-deserializer").deserialize;
 
 var test = JSON.stringify(require('./query.json'));
