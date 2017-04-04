@@ -5,14 +5,17 @@ var Require = require('mr/bootstrap-node');
 module.exports = function run(module, opts) {
     return Require.loadPackage(".").then(function (acceleratorRequire) {
         return acceleratorRequire.async('./accelerator').then(function (Accelerator) {
-            return Require.loadPackage(module).then(function (moduleRequire) {
 
-                var accelerator = new Accelerator(moduleRequire, opts);
+            var accelerator = new Accelerator(module, opts);
+
+            return accelerator.initModule().then(function () {
                 return accelerator.initServices().then(function () {
 
                     var server = http2.createServer(opts, function (request, response) {
 
-                        // TODO dispatch to accelerator
+                        // TODO dispatch to accelerator routes
+                        console.log(request.url)
+
                         return accelerator.fetchData(request, response).catch(function (err) {
                             console.error(err);
                             console.error(err.stack);
@@ -20,10 +23,12 @@ module.exports = function run(module, opts) {
                             response.end(err.message);
                         });
                     });
-                    return server.listen(8080);
+
+                    server.listen(8080);
+
+                    return accelerator;
                 });
             });
         });
     });
-
 }

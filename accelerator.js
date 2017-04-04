@@ -1,6 +1,7 @@
 // Montage Accelerator env
 var URL = require('url');
 global.XMLHttpRequest = require('xhr2');
+var Require = require('mr/bootstrap-node');
 
 function getQueryFromUrl(query) {
   var result = {};
@@ -45,8 +46,8 @@ function getDataQueryFromParams(mr, query) {
 }
 
 
-function Accelerator(moduleRequire, opts) {
-    this.moduleRequire = moduleRequire;
+function Accelerator(module, opts) {
+    this.module = module;
     this.opts = opts;
 }
 
@@ -55,6 +56,14 @@ Accelerator.prototype = {
     moduleRequire: null,
 
     mainService: null,
+
+    initModule: function () {
+        var that = this;
+        return Require.loadPackage(this.module).then(function (moduleRequire) {
+            that.moduleRequire = moduleRequire;
+            return that.moduleRequire;
+        });
+    },
 
     getMainService: function () {
         var that = this,

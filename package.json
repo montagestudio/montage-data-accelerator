@@ -13,5 +13,9 @@
     "jasmine-core": "^2.5.2",
     "montage-testing": "git://github.com/montagejs/montage-testing#master"
   },
+  "scripts": {
+    "test": "node test/run-node.js",
+    "start": "node server.js"
+  },
   "private": true
 }

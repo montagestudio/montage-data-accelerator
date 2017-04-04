@@ -2,14 +2,21 @@ var run = require('./run');
 var fs = require('fs');
 var path = require('path');
 
-run("sample/",  {
-    services: [
-        {
-            model: 'logic/model/weather-report',
-            service: 'logic/service/weather-service',
-            name: "WeatherService"
-        }
-    ],
-    key: fs.readFileSync(path.join(__dirname, '/certs/localhost.key')),
-    cert: fs.readFileSync(path.join(__dirname, '/certs/localhost.crt'))
+var acceleratedModule = "sample/",
+    acceleratedOptions = {
+        key: fs.readFileSync(path.join(__dirname, '/certs/localhost.key')),
+        cert: fs.readFileSync(path.join(__dirname, '/certs/localhost.crt')),
+        services: [
+            {
+                model: 'logic/model/weather-report',
+                service: 'logic/service/weather-service',
+                name: "WeatherService"
+            }
+        ]
+    };
+
+module.exports = run(acceleratedModule,  acceleratedOptions).then(function (accelerator) {
+    console.log('data-accelerator started.', accelerator.module);
+}, function (err) {
+    console.log('data-accelerator error', err);
 });
