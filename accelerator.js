@@ -87,6 +87,9 @@ Accelerator.prototype = {
             return Promise.all(servicesModules.map(function (serviceModule) {
                 return moduleRequire.async(serviceModule.model).then(function (module) {
                     return moduleRequire.async(serviceModule.service).then(function (module) {
+
+                        // TODO invalid service
+
                         var service = new module[serviceModule.name]();
                         return mainService.addChildService(service);
                     });
