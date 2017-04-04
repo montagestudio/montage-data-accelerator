@@ -18,7 +18,7 @@
   "scripts": {
     "test": "node test/run-node.js",
     "start": "node server.js",
-    "start:sample": "concurrently \"node server.js\" concurrently \"http-server -a localhost -p 8081\" \"open http://localhost:8081/sample\""
+    "start:sample": "concurrently \"node server.js\" concurrently \"http-server -S -C certs/localhost.crt -K certs/localhost.key -a localhost -p 8081\" \"open https://localhost:8081/sample\""
   },
   "private": true
 }
