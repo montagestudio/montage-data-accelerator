@@ -9,13 +9,16 @@
     "xhr2": "^0.1.4"
   },
   "devDependencies": {
+    "concurrently": "^3.4.0",
+    "http-server": "^0.9.0",
     "jasmine-console-reporter": "^1.2.7",
     "jasmine-core": "^2.5.2",
     "montage-testing": "git://github.com/montagejs/montage-testing#master"
   },
   "scripts": {
     "test": "node test/run-node.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "start:sample": "concurrently \"node server.js\" concurrently \"http-server -a localhost -p 8081\" \"open http://localhost:8081/sample\""
   },
   "private": true
 }
