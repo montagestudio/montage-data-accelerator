@@ -26,6 +26,22 @@ function getRequestPayload(stream) {
  *
  * @constructs Accelerator
  * @memberof module:contour-data-accelerator/Accelerator
+ *
+ * @example
+ * var acceleratedModule = path.join(__dirname, '/sample/'),
+ *     acceleratedOptions = {
+ *       key: fs.readFileSync(path.join(__dirname, '/certs/localhost.key')),
+ *       cert: fs.readFileSync(path.join(__dirname, '/certs/localhost.crt')),
+ *       services: [
+ *           {
+ *               model: 'logic/model/weather-report',
+ *               service: 'logic/service/weather-service',
+ *               name: "WeatherService"
+ *           }
+ *       ]
+ *    };
+ *
+ * var myAccelerator = new Accelerator(acceleratedModule, acceleratedOptions);
  */
 function Accelerator(module, opts) {
     this.module = module;
