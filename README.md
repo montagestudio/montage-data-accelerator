@@ -20,11 +20,11 @@ npm install git://github.com:montagestudio/contour-data-accelerator
 
 2. Configure to your main module and services with model and name.
 ```
-See server.js
+See sample-server.js
 ```
 
 3. Start 
 
 ```
-node server.js
+node sample-server.js
 ```
