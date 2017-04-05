@@ -16,19 +16,17 @@ function getRequestPayload(stream) {
   });
 }
 
-// Create dataQuery from serailized payload
-function getDataQueryFromQuery(mr, query) {
-    return mr.async("montage-data/logic/service/data-selector").then(function (module) {
-        var DataSelector = module.DataSelector;
-        return mr.async("montage/core/criteria").then(function (module) {
-            var Criteria = module.Criteria;
-            return mr.async('montage/core/serialization/deserializer/montage-deserializer').then(function (module) {
-                return module.deserialize(query, mr); 
-            });
-        });
-    });
-}
 
+/**
+ * Create an Accelerator for a given MontageModule.
+ *
+ * @param {String} tagName - the path of the montage module to load.
+ * @param {Object} [opts] - attributes hash or a name/value pair.
+ * @returns {Accelerator} the new Accelerator instance.
+ *
+ * @constructs Accelerator
+ * @memberof module:contour-data-accelerator/Accelerator
+ */
 function Accelerator(module, opts) {
     this.module = module;
     this.opts = opts;
@@ -36,10 +34,21 @@ function Accelerator(module, opts) {
 
 Accelerator.prototype = {
 
+    /**
+     * MontageRequire instance.
+     * @type {Object}
+     */
     moduleRequire: null,
 
+    /**
+     * MontageDate/DataService instance
+     * @type {Object}
+     */
     mainService: null,
 
+    /**
+     * Load accelerated module and set MontageRequire instance.
+     */
     initModule: function () {
         var that = this;
         return Require.loadPackage(this.module).then(function (moduleRequire) {
@@ -48,28 +57,16 @@ Accelerator.prototype = {
         });
     },
 
-    getMainService: function () {
-        var that = this,
-            moduleRequire = this.moduleRequire;
-
-        if (that.mainService) {
-            return Promise.resolve(that.mainService);
-        } else {
-            return moduleRequire.async("montage-data/logic/service/data-service").then(function (module) {
-                var DataService = module.DataService;
-                that.mainService = new DataService();
-                return that.mainService;
-            });
-        }
-    },
-
+    /**
+     *
+     */
     initServices: function () {
-        var moduleRequire = this.moduleRequire,
+        var mr = this.moduleRequire,
             servicesModules = this.opts.services || [];
         return this.getMainService().then(function (mainService) {
             return Promise.all(servicesModules.map(function (serviceModule) {
-                return moduleRequire.async(serviceModule.model).then(function (module) {
-                    return moduleRequire.async(serviceModule.service).then(function (module) {
+                return mr.async(serviceModule.model).then(function (module) {
+                    return mr.async(serviceModule.service).then(function (module) {
                         var service = new module[serviceModule.name]();
                         return mainService.addChildService(service);
                     });
@@ -78,24 +75,61 @@ Accelerator.prototype = {
         });
     },
 
-    getDataQuery: function (req) {
-        var moduleRequire = this.moduleRequire; 
-        return getRequestPayload(req).then(function (query) {
-            return getDataQueryFromQuery(moduleRequire, query); 
+    //
+    //
+    //
+
+    /**
+     * Get MainService instance.
+     * @return Promise[mainService]
+     */
+    getMainService: function () {
+        var that = this,
+            mr = this.moduleRequire;
+
+        if (that.mainService) {
+            return Promise.resolve(that.mainService);
+        } else {
+            return mr.async("montage-data/logic/service/data-service").then(function (module) {
+                var DataService = module.DataService;
+                that.mainService = new DataService();
+                return that.mainService;
+            });
+        }
+    },
+
+    /**
+     * 
+     */
+    getDataQuery: function (query) {
+        var mr = this.moduleRequire; 
+        return mr.async("montage-data/logic/service/data-selector").then(function (module) {
+            var DataSelector = module.DataSelector;
+            return mr.async("montage/core/criteria").then(function (module) {
+                var Criteria = module.Criteria;
+                return mr.async('montage/core/serialization/deserializer/montage-deserializer').then(function (module) {
+                    return module.deserialize(query, mr); 
+                });
+            });
         });
     },
 
+    //
+    //
+    //
+
+    /**
+     * Perform fetchData from request payload serialized DataQuery
+     * @return Promise[DataService.fetchData()]
+     */
     fetchData: function (req, res) {
 
-        var moduleRequire = this.moduleRequire, 
-            mainService = this.mainService;
-       
-        return this.getDataQuery(req).then(function (dataQuery) {
-            return mainService.fetchData(dataQuery).then(function (result) {
-                res.setHeader('content-type', 'application/json');
-                res.setHeader('Access-Control-Allow-Origin', '*');
-                res.writeHead(200);
-                res.end(JSON.stringify(result));
+        var that = this,
+            mainService = that.mainService;
+
+        return getRequestPayload(req).then(function (query) {
+            return that.getDataQuery(query).then(function (dataQuery) {
+                return mainService.fetchData(dataQuery);
             });
         });
     }
