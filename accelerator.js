@@ -3,15 +3,17 @@ var URL = require('url');
 global.XMLHttpRequest = require('xhr2');
 var Require = require('mr/bootstrap-node');
 
-function getQueryFromUrl(query) {
-  var result = {};
-  if (query) {
-      query.split("&").forEach(function(part) {
-        var item = part.split("=");
-        result[item[0]] = decodeURIComponent(item[1]);
-      });   
-  }
-  return result;
+function getRequestPayload(stream) {
+  return new Promise(function (resolve, reject) {
+        var str = '';
+        stream.on('data', function(chunk) {
+            str += chunk;
+        });
+        stream.on('end', function() {
+            resolve(decodeURIComponent(str));
+        });
+        stream.on('error', reject);
+  });
 }
 
 // Create dataQuery from serailized payload
@@ -26,25 +28,6 @@ function getDataQueryFromQuery(mr, query) {
         });
     });
 }
-
-// create an instance of DataSelector using basic serialiation
-function getDataQueryFromParams(mr, query) {
-    return mr.async("montage-data/logic/service/data-selector").then(function (module) {
-        var DataSelector = module.DataSelector;
-        return mr.async("montage/core/criteria").then(function (module) {
-            var Criteria = module.Criteria;
-            return mr.async(query.module).then(function (module) {
-                var dataType = module[query.moduleName].TYPE;
-                var dataParams = JSON.parse(query.parameters);
-                var dataExpression = query.expression;
-                var dataCriteria = new Criteria().initWithExpression(dataExpression, dataParams);
-                var dataQuery = DataSelector.withTypeAndCriteria(dataType, dataCriteria);           
-                return dataQuery;
-            });
-        });
-    });
-}
-
 
 function Accelerator(module, opts) {
     this.module = module;
@@ -87,9 +70,6 @@ Accelerator.prototype = {
             return Promise.all(servicesModules.map(function (serviceModule) {
                 return moduleRequire.async(serviceModule.model).then(function (module) {
                     return moduleRequire.async(serviceModule.service).then(function (module) {
-
-                        // TODO invalid service
-
                         var service = new module[serviceModule.name]();
                         return mainService.addChildService(service);
                     });
@@ -99,18 +79,10 @@ Accelerator.prototype = {
     },
 
     getDataQuery: function (req) {
-        var promise,
-            moduleRequire = this.moduleRequire,
-            url = URL.parse(req.url),
-            params = getQueryFromUrl(url.query); 
-
-        if (params.query) {
-            promise = getDataQueryFromQuery(moduleRequire, params.query);
-        } else {
-            promise = getDataQueryFromParams(moduleRequire, params);
-        }
-
-        return promise;
+        var moduleRequire = this.moduleRequire; 
+        return getRequestPayload(req).then(function (query) {
+            return getDataQueryFromQuery(moduleRequire, query); 
+        });
     },
 
     fetchData: function (req, res) {

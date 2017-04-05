@@ -17,43 +17,13 @@ exports.RemoteDataService = HttpService.specialize({
 
     fetchRawData: {
         value: function (stream) {
-            
-            // Using simple form of serialisation no montage-serializer
-            //return this.fetchRawDataUsingParams(stream);
-                
-            // Using montage-serializer on DataQuery
-            return this.fetchRawDataWithQuery(stream);
-            
-            // Using montage-serializer on DataQuery with POST to prevent 2048 query param 
-            // limit issue with large query
-            //return this.fetchRawDataWithBody(stream);
+            return this.fetchRawDataWithBody(stream);
         }
     },
 
-     mapFromRawData: {
+    mapFromRawData: {
         value: function (object, rawData, criteria) {
             object.temp = rawData[0].temp;
-        }
-    },
-
-    fetchRawDataWithQuery: {
-        value: function (stream) {
-            var self = this,
-                criteria = stream.selector.criteria,
-                type = stream.selector.type,
-                selector = stream.selector;
-
-            var url = self.ENDPOINT,
-                query = this._getQuery(criteria, type, selector);
-
-            url += '?query=' + query;
-
-            return self.fetchHttpRawData(url, false).then(function (data) {
-                if (data) {
-                    self.addRawData(stream, [data], criteria);
-                    self.rawDataDone(stream);
-                }
-            }); 
         }
     },
 
@@ -64,10 +34,10 @@ exports.RemoteDataService = HttpService.specialize({
                 type = stream.selector.type,
                 selector = stream.selector;
 
-            var url = self.ENDPOINT,
+            var url = self.ENDPOINT + '/fetchData',
                 body = this._getQuery(criteria, type, selector);
 
-            return self.fetchHttpRawData(url, body, false).then(function (data) {
+            return self.fetchHttpRawData(url, null, body, false).then(function (data) {
                 if (data) {
                     self.addRawData(stream, [data], criteria);
                     self.rawDataDone(stream);
@@ -75,26 +45,6 @@ exports.RemoteDataService = HttpService.specialize({
             }); 
         }
     },
-
-    fetchRawDataUsingParams: {
-        value: function (stream) {
-            var self = this,
-                criteria = stream.selector.criteria,
-                type = stream.selector.type,
-                selector = stream.selector;
-
-            var url = self.ENDPOINT;
-            url += this._getUrlQueryParams(criteria, type, selector);
-
-            return self.fetchHttpRawData(url, false).then(function (data) {
-                if (data) {
-                    self.addRawData(stream, [data], criteria);
-                    self.rawDataDone(stream);
-                }
-            }); 
-        }
-    },
-
 
     _getQuery: {
         value: function (criteria, type, selector) {
@@ -111,20 +61,5 @@ exports.RemoteDataService = HttpService.specialize({
 
             return encodeURIComponent(dataQueryJson);
         },
-    },
-
-    _getUrlQueryParams: {
-        value: function (criteria, type, selector) {
-            var that = this;
-
-            var module = type._montage_metadata.module,
-                moduleName = type._montage_metadata.property,
-                dataQueryJson = serialize(selector, require);
-
-            return '?parameters=' + encodeURIComponent(JSON.stringify(criteria.parameters)) + 
-                                    '&module=' + encodeURIComponent(module) + 
-                                    '&moduleName=' + encodeURIComponent(moduleName) +
-                                    '&expression=' + encodeURIComponent(criteria.expression);
-        }
-    },
+    }
 });
