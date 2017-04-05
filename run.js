@@ -2,6 +2,21 @@
 var http2 = require('http2');
 var Require = require('mr/bootstrap-node');
 
+
+// Retrieve POST payload from http2 request
+function getRequestPayload(stream) {
+  return new Promise(function (resolve, reject) {
+        var str = '';
+        stream.on('data', function(chunk) {
+            str += chunk;
+        });
+        stream.on('end', function() {
+            resolve(decodeURIComponent(str));
+        });
+        stream.on('error', reject);
+  });
+}
+
 module.exports = function run(module, opts) {
     // Load contour-data-accelerator
     return Require.loadPackage(".").then(function (acceleratorRequire) {
@@ -23,12 +38,14 @@ module.exports = function run(module, opts) {
 
                         // Perform fetchData from request payload serialized DataQuery
                         if (request.method === 'POST' && request.url === '/fetchData') {
-                            accelerator.fetchData(request, response).then(function (result) {
-                                response.setHeader('content-type', 'application/json');
-                                response.setHeader('Access-Control-Allow-Origin', '*');
-                                response.writeHead(200);
-                                response.end(JSON.stringify(result));
 
+                            getRequestPayload(request).then(function (query) {
+                                return accelerator.fetchData(query).then(function (result) {
+                                    response.setHeader('content-type', 'application/json');
+                                    response.setHeader('Access-Control-Allow-Origin', '*');
+                                    response.writeHead(200);
+                                    response.end(JSON.stringify(result));
+                                });
                             }).catch(function (err) {
                                 console.error(err);
                                 console.error(err.stack);

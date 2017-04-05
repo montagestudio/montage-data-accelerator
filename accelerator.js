@@ -3,19 +3,6 @@ var URL = require('url');
 global.XMLHttpRequest = require('xhr2');
 var Require = require('mr/bootstrap-node');
 
-function getRequestPayload(stream) {
-  return new Promise(function (resolve, reject) {
-        var str = '';
-        stream.on('data', function(chunk) {
-            str += chunk;
-        });
-        stream.on('end', function() {
-            resolve(decodeURIComponent(str));
-        });
-        stream.on('error', reject);
-  });
-}
-
 
 /**
  * Create an Accelerator for a given MontageModule.
@@ -138,15 +125,13 @@ Accelerator.prototype = {
      * Perform fetchData from request payload serialized DataQuery
      * @return Promise[DataService.fetchData()]
      */
-    fetchData: function (req, res) {
+    fetchData: function (query) {
 
         var that = this,
             mainService = that.mainService;
 
-        return getRequestPayload(req).then(function (query) {
-            return that.getDataQuery(query).then(function (dataQuery) {
-                return mainService.fetchData(dataQuery);
-            });
+        return this.getDataQuery(query).then(function (dataQuery) {
+            return mainService.fetchData(dataQuery);
         });
     }
 };
