@@ -16,7 +16,7 @@ module.exports = function run(module, opts) {
                     // Start HTTP2 Server
                     var server = http2.createServer(opts, function (request, response) {
 
-                        // Handle accelerator reqeust
+                        // Handle accelerator request
 
                         // TODO
                         // - express style
