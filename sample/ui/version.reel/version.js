@@ -16,7 +16,7 @@ exports.Version = Component.specialize(/** @lends Version# */ {
 
     montageDescription: {
         get: function() {
-            return ( typeof montageRequire !== "undefined" ? montageRequire : mr).packageDescription;
+            return require.packageDescription;
         }
     }
 });

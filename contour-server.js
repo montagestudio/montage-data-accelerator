@@ -1,3 +1,5 @@
+/*global require, module, process, console, __dirname */
+
 var run = require('./run');
 var fs = require('fs');
 var path = require('path');

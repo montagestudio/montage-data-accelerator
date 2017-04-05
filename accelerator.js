@@ -1,8 +1,13 @@
+/*global require, module, process, Promise */
+
 // Montage Accelerator env
-var URL = require('url');
-global.XMLHttpRequest = require('xhr2');
 var Require = require('mr/bootstrap-node');
 
+// Expose Env
+global.XMLHttpRequest = require('xhr2');
+
+// TODO
+// - IndexDb, LocalStorage, document, window
 
 /**
  * Create an Accelerator for a given MontageModule.

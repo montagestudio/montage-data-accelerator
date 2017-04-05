@@ -1,7 +1,7 @@
+/* global module, require, Promise */
 
 var http2 = require('http2');
 var Require = require('mr/bootstrap-node');
-
 
 // Retrieve POST payload from http2 request
 function getRequestPayload(stream) {
@@ -75,4 +75,4 @@ module.exports = function run(module, opts) {
             });
         });
     });
-}
+};

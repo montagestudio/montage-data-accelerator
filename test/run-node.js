@@ -1,3 +1,4 @@
+/*global require, module, process, console, __dirname */
 
 // Execute
 var mrRequire = require('mr/bootstrap-node');
