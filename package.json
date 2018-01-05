@@ -2,9 +2,8 @@
   "name": "montage-data-server",
   "version": "0.0.1",
   "dependencies": {
-    "http2": "^3.3.6",
-    "montage": "git://github.com/hthetiot/montage#upgrade_test",
-    "montage-data": "git://github.com/montagestudio/montage-data#npm",
+    "http2.js": "^4.0.2",
+    "montage": "git://github.com/montagejs/montage#master",
     "mr": "montagejs/mr#master",
     "xhr2": "^0.1.4"
   },
@@ -17,7 +16,7 @@
   },
   "scripts": {
     "test": "node test/run-node.js",
-    "start": "node server.js",
+    "start": "node sample-server.js",
     "start:sample": "concurrently \"node sample-server.js\" concurrently \"http-server -S -C certs/localhost.crt -K certs/localhost.key -a localhost -p 8081\" \"open https://localhost:8081/sample\""
   },
   "private": true

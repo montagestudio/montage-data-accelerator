@@ -1,7 +1,7 @@
 global.XMLHttpRequest = require('xhr2');
 
-var DataService = require("montage-data/logic/service/data-service").DataService,
-    DataSelector = require("montage-data/logic/service/data-selector").DataSelector
+var DataService = require("montage/data/service/data-service").DataService,
+    DataSelector = require("montage/data/service/data-selector").DataSelector
     Criteria = require("montage/core/criteria").Criteria,
     WeatherService = require("sample/logic/service/weather-service").WeatherService;
 	deserialize = require("montage/core/serialization/deserializer/montage-deserializer").deserialize;

@@ -98,7 +98,7 @@ Accelerator.prototype = {
         if (that.mainService) {
             return Promise.resolve(that.mainService);
         } else {
-            return mr.async("montage-data/logic/service/data-service").then(function (module) {
+            return mr.async("montage/data/service/data-service").then(function (module) {
                 var DataService = module.DataService;
                 that.mainService = new DataService();
                 return that.mainService;
@@ -111,7 +111,7 @@ Accelerator.prototype = {
      */
     getDataQuery: function (query) {
         var mr = this.moduleRequire; 
-        return mr.async("montage-data/logic/service/data-selector").then(function (module) {
+        return mr.async("montage/data/service/data-selector").then(function (module) {
             var DataSelector = module.DataSelector;
             return mr.async("montage/core/criteria").then(function (module) {
                 var Criteria = module.Criteria;

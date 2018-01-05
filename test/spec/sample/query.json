@@ -1,13 +1,13 @@
 {
   "weatherreport": {
     "object": "sample/logic/model/weather-report",
-    "properties": {
+    "values": {
       "identifier": null
     }
   },
   "criteria": {
     "prototype": "montage/core/criteria",
-    "properties": {
+    "values": {
       "expression": "city = $city && unit = $unit && country = $country",
       "parameters": {
         "city": "San-Francisco",
@@ -17,8 +17,8 @@
     }
   },
   "root": {
-    "prototype": "montage-data/logic/service/data-selector",
-    "properties": {
+    "prototype": "montage/data/service/data-selector",
+    "values": {
       "type": {"@": "weatherreport"},
       "criteria": {"@": "criteria"},
       "orderings": [],
