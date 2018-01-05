@@ -7,8 +7,8 @@ var WeatherReport = require("logic/model/weather-report").WeatherReport;
 var WeatherReportType = require("logic/model/weather-report").Type;
 var WeatherService = require("logic/service/weather-service").WeatherService;
 var RemoteDataService = require("logic/service/remote-data-service").RemoteDataService;
-var DataService = require("montage-data/logic/service/data-service").DataService;
-var DataSelector = require("montage-data/logic/service/data-selector").DataSelector;
+var DataService = require("montage/data/service/data-service").DataService;
+var DataSelector = require("montage/data/service/data-selector").DataSelector;
 
 /**
  * @class Converter
@@ -21,7 +21,7 @@ exports.Converter = Component.specialize(/** @lends Converter# */ {
             this.super();
 
             var mainService = new DataService();
-            mainService.addChildService(new RemoteDataService());
+            //mainService.addChildService(new RemoteDataService());
             mainService.addChildService(new WeatherService());
 
             var dataExpression = "city = $city && unit = $unit && country = $country";

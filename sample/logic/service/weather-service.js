@@ -1,6 +1,6 @@
-var HttpService = require("montage-data/logic/service/http-service").HttpService,
-    DataService = require("montage-data/logic/service/data-service").DataService,
-    DataSelector = require("montage-data/logic/service/data-selector").DataSelector,
+var HttpService = require("montage/data/service/http-service").HttpService,
+    DataService = require("montage/data/service/data-service").DataService,
+    DataSelector = require("montage/data/service/data-selector").DataSelector,
     WeatherReport = require("../model/weather-report").WeatherReport;
 
 /**
@@ -12,11 +12,11 @@ var HttpService = require("montage-data/logic/service/http-service").HttpService
  var WeatherService = exports.WeatherService = HttpService.specialize(/** @lends AreaBriefService.prototype */ {
 
     API_KEY: {
-        value: '7593a575795cbd73f54c69a321ed86fe'
+        value: '5ad6d34065ff5e9741f15dadac0ace9a'
     },
 
     ENDPOINT: {
-        value: 'http://api.openweathermap.org/data/2.5/'
+        value: 'https://api.openweathermap.org/data/2.5/'
     },
 
    

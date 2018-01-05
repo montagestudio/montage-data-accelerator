@@ -6,38 +6,32 @@
     <script type="text/montage-serialization">
     {
         "owner": {
-            "properties": {
+            "values": {
                 "element": {"#": "owner"}
             }
         },
 
         "celsiusNumberfield": {
             "prototype": "digit/ui/number-field.reel",
-            "properties": {
-                "element": {"#": "celsius"}
-            },
-            "bindings": {
+            "values": {
+                "element": {"#": "celsius"},
                 "value": {"<->": "(+@fahrenheitNumberfield.value - 32) / 1.8"}
             }
         },
 
         "fahrenheitNumberfield": {
             "prototype": "digit/ui/number-field.reel",
-            "properties": {
-                "element": {"#": "fahrenheit"}
-            },
-            "bindings": {
+            "values": {
+                "element": {"#": "fahrenheit"},
                 "value": {"<->": "@owner.weatherReport.temp"}
             }
         },
 
         "thermometer": {
             "prototype": "digit/ui/slider.reel",
-            "properties": {
+            "values": {
                 "element": {"#": "thermometer"},
-                "axis": "vertical"
-            },
-            "bindings": {
+                "axis": "vertical",
                 "value": {"<->": "@fahrenheitNumberfield.value"}
             }
         }

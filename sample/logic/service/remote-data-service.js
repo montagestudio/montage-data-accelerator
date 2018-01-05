@@ -1,5 +1,5 @@
-var HttpService = require("montage-data/logic/service/http-service").HttpService,
-    DataObjectDescriptor = require("montage-data/logic/model/data-object-descriptor").DataObjectDescriptor,
+var HttpService = require("montage/data/service/http-service").HttpService,
+    DataObjectDescriptor = require("montage/data/model/data-object-descriptor").DataObjectDescriptor,
     serialize = require("montage/core/serialization/serializer/montage-serializer").serialize,
     deserialize = require("montage/core/serialization/deserializer/montage-deserializer").deserialize;
 

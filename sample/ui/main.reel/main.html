@@ -9,31 +9,29 @@
     <script type="text/montage-serialization">
         {
             "owner": {
-                "properties": {
+                "values": {
                     "element": {"#": "main"}
                 }
             },  
 
             "title": {
                 "prototype": "ui/title.reel",
-                "properties": {
-                    "element": {"#": "title"}
-                },
-                "bindings": {
+                "values": {
+                    "element": {"#": "title"},
                     "value": {"<->": "@owner.titleValue"}
                 }
             },
             
             "tempConverter": {
                 "prototype": "ui/converter.reel",
-                "properties": {
+                "values": {
                     "element": {"#": "tempConverter"}
                 }
             },
 
             "montageVersion": {
                 "prototype": "ui/version.reel",
-                "properties": {
+                "values": {
                     "element": {"#": "montageVersion"}
                 }
             }

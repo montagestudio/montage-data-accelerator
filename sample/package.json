@@ -3,8 +3,7 @@
     "version": "0.1.0",
     "main": "",
     "dependencies": {
-        "montage": "git://github.com/hthetiot/montage#upgrade_test",
-        "montage-data": "git://github.com/montagestudio/montage-data#npm",
+        "montage": "git://github.com/montagejs/montage#master",
         "digit": "~0.5.0"
     },
     "devDependencies": {

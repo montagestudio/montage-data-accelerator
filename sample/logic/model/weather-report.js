@@ -1,6 +1,6 @@
 var Montage = require("montage").Montage,
-    Enumeration = require("montage-data/logic/model/enumeration").Enumeration,
-    DataObjectDescriptor = require("montage-data/logic/model/data-object-descriptor").DataObjectDescriptor;
+    Enumeration = require("montage/data/model/enumeration").Enumeration,
+    DataObjectDescriptor = require("montage/data/model/data-object-descriptor").DataObjectDescriptor;
 
 exports.WeatherReport = Montage.specialize(/** @lends AreaBriefReport.prototype */ {
     temp: {
