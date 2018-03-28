@@ -23,7 +23,7 @@ var HttpService = require("montage/data/service/http-service").HttpService,
     fetchRawData: {
         value: function (stream) {
             var self = this,
-                criteria = stream.selector.criteria;
+                criteria = stream.query.criteria;
 
             return self.fetchHttpRawData(this._getUrl(criteria, true), false).then(function (data) {
                 if (data) {

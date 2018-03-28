@@ -12,7 +12,7 @@ var HttpService = require("montage/data/service/http-service").HttpService,
 exports.RemoteDataService = HttpService.specialize({
 
     ENDPOINT: {
-        value: 'https://localhost:8080'
+        value: 'http://localhost:8080/api'
     },
 
     fetchRawData: {
@@ -34,14 +34,15 @@ exports.RemoteDataService = HttpService.specialize({
                 type = stream.selector.type,
                 selector = stream.selector;
 
-            var url = self.ENDPOINT + '/fetchData',
-                body = this._getQuery(criteria, type, selector);
+            var url = self.ENDPOINT + '/fetchData';
 
-            return self.fetchHttpRawData(url, null, body, false).then(function (data) {
-                if (data) {
-                    self.addRawData(stream, [data], criteria);
-                    self.rawDataDone(stream);
-                }
+            return self._getQuery(criteria, type, selector).then(function (body) {
+                return self.fetchHttpRawData(url, null, body, false).then(function (data) {
+                    if (data) {
+                        self.addRawData(stream, [data], criteria);
+                        self.rawDataDone(stream);
+                    }
+                }); 
             }); 
         }
     },
@@ -52,14 +53,13 @@ exports.RemoteDataService = HttpService.specialize({
                 dataQueryJson = serialize(selector, require);
 
             // Debug serialize
-            //sconsole.log(dataQueryJson);
-
+            //console.log(dataQueryJson);
+            return Promise.resolve(encodeURIComponent(dataQueryJson));
             // Test deserialize
-            deserialize(dataQueryJson, require).then(function (dataQuery) {
+            return deserialize(dataQueryJson, require).then(function (dataQuery) {
                 //console.log(dataQuery);
+                return encodeURIComponent(dataQueryJson);
             });
-
-            return encodeURIComponent(dataQueryJson);
         },
     }
 });

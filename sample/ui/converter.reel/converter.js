@@ -21,12 +21,12 @@ exports.Converter = Component.specialize(/** @lends Converter# */ {
             this.super();
 
             var mainService = new DataService();
-            //mainService.addChildService(new RemoteDataService());
+            mainService.addChildService(new RemoteDataService());
             mainService.addChildService(new WeatherService());
 
             var dataExpression = "city = $city && unit = $unit && country = $country";
             var dataParameters = {
-                city: 'San-Francisco',
+                city: 'San Francisco',
                 country: 'us',
                 unit: 'imperial'
             };
